@@ -1,0 +1,158 @@
+.wrap{
+  width: 100%;
+  height: 100%;
+}
+
+.modalContent ul{
+  text-align: center;
+  margin-top: 70px;
+}
+.modalContent ul li{
+  padding: 5px 40px;
+  list-style-type: none;
+  display: inline-block;
+  border: 1px solid #000;
+  border-radius: 5px;
+  margin: 0 20px;
+  transition: 0.5s;
+  cursor: pointer;
+}
+.modalContent li:first-child:hover{
+  background: rgb(82, 255, 77);
+  color: #fff;  
+}
+.modalContent li:last-child:hover{
+  background: rgb(255, 84, 84);
+  color: #fff;
+}
+
+.titleBloco{
+  border-bottom: 1px solid #1111113f;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.titleBloco i{  
+  font-size: 2em;
+  color: rgb(255, 75, 75);  
+}
+.titleBloco span{
+  padding-top: 25px;  
+  padding-right: 50px;
+  color: rgb(255, 75, 75);  
+  cursor: pointer;
+}
+h2{  
+  margin: 15px 0px 0px 30px;
+  /* width: 100%; */
+}
+.titleBloco h2 i{
+  font-size: 1em;
+  color: rgb(92, 0, 128);
+  padding-right: 10px;
+}
+.msgs{  
+  position: absolute;
+  width: 80%;
+  top: 70px;
+  left: 80px;
+  overflow: hidden;  
+}
+
+.addMsg{
+  position: absolute;  
+  top: 20px; 
+  left: 10px;
+  width: 100%;
+}
+.msg{
+  display: flex;
+}
+.msg .task-fiel{
+  width: 98%;
+  min-height: 50px;
+  outline: 0;  
+  border: 1px solid #1111113f;  
+  border-left: 4px solid rgb(92, 0, 128);
+  background: #e4e4e444;
+  border-radius: 2px;  
+  padding-left: 10px;
+  font-size: 12px;  
+  color: #333;  
+  /* padding-top: 15px; */
+  /* font-weight: 700; */
+}
+/* .msg i{
+  position: relative;
+  margin-left: 35px;
+  font-size: 45px;
+  right: 30px;
+  cursor: pointer;
+  color: rgb(58, 208, 228);
+} */
+.msg button{
+  display: none;
+}
+
+.listMsg{
+  margin-top: 80px;
+  margin-left: 10px;
+  width: 98%;
+  height: 60vh;
+  border: 1px solid #1111113f;
+  overflow-y: auto;  
+  overflow-x: hidden;
+  border-radius: 5px;
+}
+
+.listadiv{
+  width: 100%;
+}
+.msgEnviada:first-child{
+  margin-top: 60px;
+}
+.msgEnviada{
+  margin-top: 10px;
+  margin-left: 10px;
+  display: flex;
+  width: 100%;
+}
+.msgEnviada .txt{
+  width: 100%;
+}
+.msgEnviada #textarea{
+  width: 100%;
+  min-height: 40px;
+  padding-top: 10px;
+  padding-left: 10px;
+  border: 1px solid #1111113f;  
+  border-left: 4px solid rgb(92, 0, 128);
+  background: #e4e4e444;
+  color: #000;
+  border-radius: 3px;
+  outline: 0; 
+  font-size: 12px;  
+  color: #333; 
+  resize: none;
+}
+.msgEnviada .botaoexcluir{
+  padding-left: 70px;
+  padding-right: 70px;
+  padding-top: 15px;
+  cursor: pointer;
+  color: #7e7e7e;
+}
+
+.saveMsg{
+  position: absolute;
+  top: 70px;  
+  right: 35px;
+}
+.saveMsg i{
+  font-size: 1.5em;  
+  cursor: pointer;
+  color: rgb(55, 163, 55);  
+}
+.saveMsg i:hover{
+  transform: translateY(-0.15em);
+}

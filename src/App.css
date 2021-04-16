@@ -1,38 +1,176 @@
-.App {
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat';
+}
+
+html, body{
+  height: 100% !important;
+}
+body{
+  overflow-x: hidden;
+}
+
+header{
+  background: rgb(102, 0, 128);
+  width: 100%;
+  height: 80px;  
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+header h1{
+  text-align: left;
+  color: #fff;
+  padding-left: 80px;  
+  padding-top: 10px;
+}
+header ul{
+  text-align: right;  
+  margin-right: 80px;
+  margin-top: -20px;
+}
+header ul li{
+  list-style-type: none;
+  display: inline-block;
+  font-size: 1.2em;
+  color: #fff;
+  padding: 0 15px;      
+}
+.blocos{
+  width: 250px;
+  height: 100%;
+  border-right: 1px solid #1111113f;
+  text-align: center;
+  overflow-y: auto;
+  position: fixed;
+}
+.blocos h3{
+  margin-top: 40px;  
+  margin-bottom: 40px;
+  padding: 10px 30px;
+  display: inline-block;  
+  transition: 0.3s;
+  cursor: pointer;
+  /* border: 1px solid #1111113f; */
+  border-radius: 5px;
+  background: #8722c5;
+  color: #fff;
+  -webkit-box-shadow: -1px 6px 7px -5px rgba(0,0,0,0.75);
+  -moz-box-shadow: -1px 6px 7px -5px rgba(0,0,0,0.75);
+  box-shadow: -1px 6px 7px -5px rgba(0,0,0,0.75);
+}
+.blocos h3:hover{
+  background: #6a1b9a;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.blocos i{
+  display: inline-block;
+}
+.blocos p{  
+  border: 1px solid rgb(92, 0, 128);
+  color: #000;
+  font-weight: 500;
+  padding: 10px 0;
+  border-radius: 5px;
+  margin: 15px 20px;
+  cursor: pointer;
+  transition: 0.5s;  
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.blocos p:hover{
+  transform: translateY(-0.15em);
+  background: rgb(92, 0, 128);
+  color: #fff;
+  -webkit-box-shadow: 0px 20px 15px -15px rgba(0,0,0,0.67);
+  -moz-box-shadow: 0px 20px 15px -15px rgba(0,0,0,0.67);
+  box-shadow: 0px 20px 15px -15px rgba(0, 0, 0, 0.849);
 }
 
-.App-link {
-  color: #61dafb;
+.modal{
+  text-align: center;  
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 99;
+}
+.modalContent{
+  width: 500px;
+  padding: 40px 20px;
+  background: rgb(255, 255, 255);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);  
+  border-radius: 20px;  
+}
+.modalContent i{
+  position: absolute;
+  top: 5px;
+  right: 15px;
+  font-size: 22px;
+  color: red;
+  cursor: pointer;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.modalContent #namesBlocos{
+  margin-top: 30px;  
+  width: 180px;
+  height: 35px;
+  border: 1px solid rgb(92, 0, 128);  
+  border-radius: 5px;
+  padding: 0 5px;
+  outline: 0;
+}
+.modalContent option{
+  border-radius: 10px;
+  border: 1px solid rgb(92, 0, 128);
+  padding: 10px 0;
+}
+
+
+.modalContent h6{  
+  display: block;
+  border: 1px solid rgb(92, 0, 128);;
+  padding: 10px 10px;
+  margin-top: 20px;
+  border-radius: 5px;  
+  cursor: pointer;
+  margin: 20px 140px;
+  transition: 0.3s;
+}
+.modalContent h6:hover{
+  transform: translateY(-0.15em);
+  background: rgb(92, 0, 128);
+  color: #fff;
+  -webkit-box-shadow: 0px 20px 15px -15px rgba(0,0,0,0.67);
+  -moz-box-shadow: 0px 20px 15px -15px rgba(0,0,0,0.67);
+  box-shadow: 0px 20px 15px -15px rgba(0, 0, 0, 0.849);
+}
+
+.builder{  
+  position: absolute;
+  left: 250px;
+  top: 80px;
+  width: calc(100% - 250px);
+  height: calc(100% - 80px);
+}
+
+.initPage h2{
+  margin-top: 80px;
+  font-size: 4em;
+  text-align: center;
+  font-family: 'Montserrat';
+  text-transform: uppercase;
+}
+.initPage .texxia{
+  margin-top: 50px;
+  text-align: center;
+}
+.initPage .texxia img{
+  width: 410px;
+  height: 270px;
 }
