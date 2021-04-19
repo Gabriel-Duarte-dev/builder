@@ -1,10 +1,21 @@
 import './App.css';
+import React from 'react';
 import api from './api.js'
 import Builder from './Builder.js'
 import {useParams} from 'react-router-dom'
 import {useEffect, useState} from 'react'
 
+import { makeStyles } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import Button from '@material-ui/core/Button';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import AddIcon from '@material-ui/icons/Add';
+
 import texxia from './imagens/texxia.png'
+import { red } from '@material-ui/core/colors';
 
 function App(props) {
   
@@ -29,7 +40,7 @@ function App(props) {
 
   const [modal, setModal] = useState(false);  
 
-  const [builder, setBuilder] = useState(false);  
+  const [builder, setBuilder] = useState(false);   
 
   const salvarBloco = async () => {    
 
@@ -39,7 +50,7 @@ function App(props) {
       const response = await api.post('/api/bloco/register',{
         botSid: id,      
         nomeBloco: nomeBot
-    })
+    })    
     receber()    
     console.log(response);
     } catch (error) {
@@ -73,6 +84,41 @@ function App(props) {
   useEffect(() => {
     receber()
   },[])
+
+  const useStyles = makeStyles((theme) => ({
+
+    button: {      
+      marginTop: '30px',  
+      marginBottom: '30px',
+      width: '80%',
+      height: '45px',
+      background: '#8722c5',      
+      color: '#fff',
+      '&:hover': {
+        background: '#6a1b9a'
+      }
+    },
+
+    // button2: {   
+    //   display: 'inline-block',   
+    //   marginTop: '30px',  
+    //   marginBottom: '30px',
+    //   width: '150px',
+    //   height: '40px',
+    //   background: '#8722c5',      
+    //   color: '#fff',
+    //   '&:hover': {
+    //     background: '#6a1b9a'
+    //   }
+    // },
+    
+    selectEmpty: {
+      marginTop: theme.spacing(2),
+    }
+  }));
+
+  const classes = useStyles();
+  const [age, setAge] = React.useState('');
   
   return (
     
@@ -81,44 +127,56 @@ function App(props) {
 
       {
         modal?
-        <div className="modal">
+        <div className="modal">          
           <div className="modalContent">
             <i onClick={()=>openModal()} className="fas fa-times"></i>
             <h3>Adicionar Bloco</h3>
-            <select onChange={(text)=>setNomeBot(text.target.value)} id="namesBlocos">
-              <option value="Inicio">Inicio</option>
-              <option value="Boas vindas">Boas vindas</option>
-              <option value="Cidade">Cidade</option>
-              <option value="E-mail">E-mail</option>
-              <option value="O que gostaria de saber?">O que gostaria de saber?</option>
-              <option value="Saudação-Nome">Saudação-Nome</option>
-              <option value="Apresentação">Apresentação</option>
-              <option value="Não entendi simulação">Não entendi simulação</option>
-              <option value="Simulação-Valores">Simulação-Valores</option>
-              <option value="FGTS">FGTS</option>
-              <option value="Entrada">Entrada</option>
-              <option value="Fim Simulção">Fim Simulção</option>
-              <option value="Agradecimento">Agradecimento</option>
-              <option value="Animal">Animal</option>
-              <option value="Condomíno">Condomíno</option>
-              <option value="Lazer">Lazer</option>
-              <option value="Localização">Localização</option>
-              <option value="Erro padrão">Erro padrão</option>
-              <option value="Contatos">Contatos</option>
-              <option value="Visita">Visita</option>
-              <option value="Final Visita">Final Visita</option>
-              <option value="Escola">Escola</option>
-              <option value="Construção">Construção</option>
-              <option value="Incorporadora">Incorporadora</option>
-              <option value="Segurança Bairro">Segurança Bairro</option>
-              <option value="Entrega Obras">Entrega Obras</option>
-              <option value="Documentação Cliente">Documentação Cliente</option>
-              <option value="Documentação Projeto">Documentação Projeto</option>
-              <option value="Juros">Juros</option>
-              <option value="Agua-Luz-Gás">Agua-Luz-Gás</option>
-              <option value="Mais alguma coisa?">Mais alguma coisa?</option>
-            </select>
-            <h6 onClick={()=>salvarBloco()}>Adicionar</h6>            
+            <FormControl variant="outlined">
+            <InputLabel>Selecione o bloco</InputLabel>
+              <Select onChange={(text)=>setNomeBot(text.target.value)} label="Selecione o bloco" className="namesBlocos">
+                <MenuItem value="">None</MenuItem>
+                <MenuItem value="Inicio">Inicio</MenuItem>
+                <MenuItem value="Boas vindas">Boas vindas</MenuItem>
+                <MenuItem value="Cidade">Cidade</MenuItem>
+                <MenuItem value="E-mail">E-mail</MenuItem>
+                <MenuItem value="O que gostaria de saber?">O que gostaria de saber?</MenuItem>
+                <MenuItem value="Saudação-Nome">Saudação-Nome</MenuItem>
+                <MenuItem value="Apresentação">Apresentação</MenuItem>
+                <MenuItem value="Não entendi simulação">Não entendi simulação</MenuItem>
+                <MenuItem value="Simulação-Valores">Simulação-Valores</MenuItem>
+                <MenuItem value="FGTS">FGTS</MenuItem>
+                <MenuItem value="Entrada">Entrada</MenuItem>
+                <MenuItem value="Fim Simulção">Fim Simulção</MenuItem>
+                <MenuItem value="Agradecimento">Agradecimento</MenuItem>
+                <MenuItem value="Animal">Animal</MenuItem>
+                <MenuItem value="Condomíno">Condomíno</MenuItem>
+                <MenuItem value="Lazer">Lazer</MenuItem>
+                <MenuItem value="Localização">Localização</MenuItem>
+                <MenuItem value="Erro padrão">Erro padrão</MenuItem>
+                <MenuItem value="Contatos">Contatos</MenuItem>
+                <MenuItem value="Visita">Visita</MenuItem>
+                <MenuItem value="Final Visita">Final Visita</MenuItem>
+                <MenuItem value="Escola">Escola</MenuItem>
+                <MenuItem value="Construção">Construção</MenuItem>
+                <MenuItem value="Incorporadora">Incorporadora</MenuItem>
+                <MenuItem value="Segurança Bairro">Segurança Bairro</MenuItem>
+                <MenuItem value="Entrega Obras">Entrega Obras</MenuItem>
+                <MenuItem value="Documentação Cliente">Documentação Cliente</MenuItem>
+                <MenuItem value="Documentação Projeto">Documentação Projeto</MenuItem>
+                <MenuItem value="Juros">Juros</MenuItem>
+                <MenuItem value="Agua-Luz-Gás">Agua-Luz-Gás</MenuItem>
+                <MenuItem value="Mais alguma coisa?">Mais alguma coisa?</MenuItem>
+              </Select>
+            </FormControl>           
+            {/* <h6 onClick={()=>salvarBloco()}>Adicionar</h6> */}
+            <Button
+              variant="contained"        
+              className="addBlocoModal"              
+              endIcon={<AddIcon />}        
+              onClick={()=>salvarBloco()}
+            >
+              Adicionar
+            </Button>           
           </div>
         </div>
         :
@@ -136,7 +194,16 @@ function App(props) {
        </header>
 
        <div className="blocos">         
-         <h3 onClick={()=>openModal()}>Add Bloco +</h3>
+         {/* <h3 onClick={()=>openModal()}>Add Bloco +</h3> */}
+         <Button
+        variant="contained"        
+        className="addBloco"
+        className={classes.button}
+        endIcon={<AddCircleOutlineIcon />}        
+        onClick={()=>openModal()}
+      >
+        Add Bloco
+      </Button>
          {           
            blocos.map((val, index) => {
             return(

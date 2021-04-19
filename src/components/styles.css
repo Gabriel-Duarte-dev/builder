@@ -36,12 +36,12 @@
   font-size: 2em;
   color: rgb(255, 75, 75);  
 }
-.titleBloco span{
+/* .titleBloco span{
   padding-top: 25px;  
   padding-right: 50px;
   color: rgb(255, 75, 75);  
   cursor: pointer;
-}
+} */
 h2{  
   margin: 15px 0px 0px 30px;
   /* width: 100%; */
@@ -50,6 +50,10 @@ h2{
   font-size: 1em;
   color: rgb(92, 0, 128);
   padding-right: 10px;
+}
+.titleBloco h2 .botName{
+  padding: 0;
+  color: rgb(92, 0, 128);
 }
 .msgs{  
   position: absolute;
@@ -77,10 +81,10 @@ h2{
   background: #e4e4e444;
   border-radius: 2px;  
   padding-left: 10px;
+  padding-top: 17px;
   font-size: 12px;  
-  color: #333;  
-  /* padding-top: 15px; */
-  /* font-weight: 700; */
+  color: #333;
+  resize: none;  
 }
 /* .msg i{
   position: relative;
@@ -109,7 +113,7 @@ h2{
   width: 100%;
 }
 .msgEnviada:first-child{
-  margin-top: 60px;
+  margin-top: 10px;
 }
 .msgEnviada{
   margin-top: 10px;
@@ -121,7 +125,7 @@ h2{
   width: 100%;
 }
 .msgEnviada #textarea{
-  width: 100%;
+  width: 100%;  
   min-height: 40px;
   padding-top: 10px;
   padding-left: 10px;
@@ -136,8 +140,8 @@ h2{
   resize: none;
 }
 .msgEnviada .botaoexcluir{
-  padding-left: 70px;
-  padding-right: 70px;
+  padding-left: 10px;
+  padding-right: 100px;
   padding-top: 15px;
   cursor: pointer;
   color: #7e7e7e;
@@ -145,14 +149,9 @@ h2{
 
 .saveMsg{
   position: absolute;
-  top: 70px;  
-  right: 35px;
+  bottom: 10px;  
+  right: 25px;
 }
-.saveMsg i{
-  font-size: 1.5em;  
-  cursor: pointer;
-  color: rgb(55, 163, 55);  
-}
-.saveMsg i:hover{
+.saveMsg .saved:hover{
   transform: translateY(-0.15em);
 }

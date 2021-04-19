@@ -13,7 +13,7 @@ body{
 }
 
 header{
-  background: rgb(102, 0, 128);
+  background: rgb(32, 32, 32);
   width: 100%;
   height: 80px;  
   text-align: center;
@@ -45,14 +45,14 @@ header ul li{
   overflow-y: auto;
   position: fixed;
 }
-.blocos h3{
+/* .blocos .addBloco{
   margin-top: 40px;  
   margin-bottom: 40px;
   padding: 10px 30px;
   display: inline-block;  
   transition: 0.3s;
   cursor: pointer;
-  /* border: 1px solid #1111113f; */
+  border: 1px solid #1111113f; 
   border-radius: 5px;
   background: #8722c5;
   color: #fff;
@@ -60,9 +60,9 @@ header ul li{
   -moz-box-shadow: -1px 6px 7px -5px rgba(0,0,0,0.75);
   box-shadow: -1px 6px 7px -5px rgba(0,0,0,0.75);
 }
-.blocos h3:hover{
+.blocos .addBloco:hover{
   background: #6a1b9a;
-}
+} */
 
 .blocos i{
   display: inline-block;
@@ -116,14 +116,16 @@ header ul li{
   cursor: pointer;
 }
 
-.modalContent #namesBlocos{
-  margin-top: 30px;  
-  width: 180px;
-  height: 35px;
-  border: 1px solid rgb(92, 0, 128);  
+.modalContent h3{
+  margin-bottom: 30px;
+}
+.modalContent .namesBlocos{  
+  width: 250px;
+  /* height: 35px; */
+  /* border: 1px solid rgb(92, 0, 128);   */
   border-radius: 5px;
-  padding: 0 5px;
-  outline: 0;
+  padding: 0px 5px;  
+  /* outline: 0; */
 }
 .modalContent option{
   border-radius: 10px;
@@ -131,10 +133,9 @@ header ul li{
   padding: 10px 0;
 }
 
-
-.modalContent h6{  
-  display: block;
-  border: 1px solid rgb(92, 0, 128);;
+.modalContent .addBlocoModal{    
+  /* border: 0.5px solid rgb(92, 0, 128); */
+  background: rgba(255, 255, 255, 0);
   padding: 10px 10px;
   margin-top: 20px;
   border-radius: 5px;  
@@ -142,13 +143,9 @@ header ul li{
   margin: 20px 140px;
   transition: 0.3s;
 }
-.modalContent h6:hover{
-  transform: translateY(-0.15em);
+.modalContent .addBlocoModal:hover{  
   background: rgb(92, 0, 128);
   color: #fff;
-  -webkit-box-shadow: 0px 20px 15px -15px rgba(0,0,0,0.67);
-  -moz-box-shadow: 0px 20px 15px -15px rgba(0,0,0,0.67);
-  box-shadow: 0px 20px 15px -15px rgba(0, 0, 0, 0.849);
 }
 
 .builder{  
