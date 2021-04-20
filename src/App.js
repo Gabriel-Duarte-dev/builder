@@ -15,7 +15,6 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import AddIcon from '@material-ui/icons/Add';
 
 import texxia from './imagens/texxia.png'
-import { red } from '@material-ui/core/colors';
 
 function App(props) {
   
@@ -38,9 +37,7 @@ function App(props) {
     }
   }
 
-  const [modal, setModal] = useState(false);  
-
-  const [builder, setBuilder] = useState(false);   
+  const [modal, setModal] = useState(false);
 
   const salvarBloco = async () => {    
 
@@ -78,7 +75,7 @@ function App(props) {
   const openBuilder = (id) => {
     // setBuilder(!builder);
 
-    setBlocoID(id)        
+    setBlocoID(id)
   }  
 
   useEffect(() => {
@@ -88,32 +85,15 @@ function App(props) {
   const useStyles = makeStyles((theme) => ({
 
     button: {      
-      marginTop: '30px',  
+      marginTop: '30px',
       marginBottom: '30px',
       width: '80%',
       height: '45px',
-      background: '#8722c5',      
+      background: '#8722c5',
       color: '#fff',
       '&:hover': {
         background: '#6a1b9a'
       }
-    },
-
-    // button2: {   
-    //   display: 'inline-block',   
-    //   marginTop: '30px',  
-    //   marginBottom: '30px',
-    //   width: '150px',
-    //   height: '40px',
-    //   background: '#8722c5',      
-    //   color: '#fff',
-    //   '&:hover': {
-    //     background: '#6a1b9a'
-    //   }
-    // },
-    
-    selectEmpty: {
-      marginTop: theme.spacing(2),
     }
   }));
 

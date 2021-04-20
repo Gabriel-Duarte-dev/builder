@@ -72,12 +72,57 @@ h2{
 .msg{
   display: flex;
 }
+.msg .txt{
+  width: 100%;
+}
 .msg .task-fiel{
   width: 98%;
   min-height: 50px;
   outline: 0;  
   border: 1px solid #1111113f;  
-  border-left: 4px solid rgb(92, 0, 128);
+  border-left: 4px solid rgb(0, 0, 0);
+  background: #e4e4e444;
+  border-radius: 2px;  
+  padding-left: 10px;
+  padding-top: 17px;
+  font-size: 12px;  
+  color: #333;
+  resize: none;  
+}
+.msg .variable{
+  width: 98%;
+  min-height: 50px;
+  outline: 0;  
+  border: 1px solid #1111113f;  
+  border-left: 4px solid rgb(9, 214, 135);
+  background: #e4e4e444;
+  border-radius: 2px;  
+  padding-left: 10px;
+  padding-top: 17px;
+  font-size: 12px;  
+  color: #333;
+  resize: none;  
+}
+.msg .time{
+  width: 98%;
+  min-height: 50px;
+  outline: 0;  
+  border: 1px solid #1111113f;  
+  border-left: 4px solid rgb(255, 115, 0);
+  background: #e4e4e444;
+  border-radius: 2px;  
+  padding-left: 10px;
+  padding-top: 17px;
+  font-size: 12px;  
+  color: #333;
+  resize: none;  
+}
+.msg .img{
+  width: 98%;
+  min-height: 50px;
+  outline: 0;  
+  border: 1px solid #1111113f;  
+  border-left: 4px solid rgb(255, 0, 0);
   background: #e4e4e444;
   border-radius: 2px;  
   padding-left: 10px;
@@ -126,11 +171,60 @@ h2{
 }
 .msgEnviada #textarea{
   width: 100%;  
-  min-height: 40px;
+  min-height: 40px;  
   padding-top: 10px;
+  padding-bottom: 10px;
   padding-left: 10px;
   border: 1px solid #1111113f;  
-  border-left: 4px solid rgb(92, 0, 128);
+  border-left: 4px solid rgb(9, 98, 214);
+  background: #e4e4e444;
+  color: #000;
+  border-radius: 3px;
+  outline: 0; 
+  font-size: 12px;  
+  color: #333; 
+  resize: none;
+}
+.msgEnviada #Variable-textarea{
+  width: 100%;  
+  min-height: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  border: 1px solid #1111113f;  
+  border-left: 4px solid rgb(9, 214, 135);
+  background: #e4e4e444;
+  color: #000;
+  border-radius: 3px;
+  outline: 0; 
+  font-size: 12px;  
+  color: #333; 
+  resize: none;
+}
+.msgEnviada #img-textarea{
+  width: 100%;  
+  min-height: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  border: 1px solid #1111113f;  
+  border-left: 4px solid rgb(255, 0, 0);
+  background: #e4e4e444;
+  color: #000;
+  border-radius: 3px;
+  outline: 0; 
+  font-size: 12px;  
+  color: #333; 
+  resize: none;
+}
+.msgEnviada #time-textarea{
+  width: 100%;  
+  min-height: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  border: 1px solid #1111113f;  
+  border-left: 4px solid rgb(255, 115, 0);
   background: #e4e4e444;
   color: #000;
   border-radius: 3px;

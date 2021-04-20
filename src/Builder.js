@@ -76,11 +76,13 @@ export default function Builder(props) {
     
   let {id} = useParams();
 
+  const [send, setSend] = useState();
+
   const [tasks, setTask] = useState([]);
 
   const [nomeBloco, setNomeBloco] = useState("");
 
-  const [botName, setBotName] = useState("");  
+  const [botName, setBotName] = useState("");    
 
   const [modalDelete, setModalDelete] = useState(false);
 
@@ -109,7 +111,7 @@ export default function Builder(props) {
     setTask(newTasks)
 
   }
-  async function enviar() {
+   async function enviar() {
     const response_get = await api.get('/api/bloco/'+props.blocoID)        
     const data = response_get.data
     const dados = {
@@ -128,7 +130,8 @@ export default function Builder(props) {
 
     console.log(response);
 
-  }
+  } 
+
   async function receber() {
       try {
         const response = await api.get('/api/bloco/'+props.blocoID);
@@ -167,14 +170,15 @@ export default function Builder(props) {
 
   async function deleteBloco() {
     try {      
-      const response = await api.delete('/api/bloco/'+props.blocoID);        
+      const response = await api.delete('/api/bloco/'+props.blocoID);      
       // const data = response.data.mensagem
       // setTask(data)
       // console.log(data);
       console.log(response)      
-      setOpenDelete(true);
-      setModalDelete(!modalDelete);
-      window.location.reload();
+      openDelete ? setModalDelete(!modalDelete) : setOpenDelete(true); setModalDelete(!modalDelete)      
+      setTimeout(function() {
+        window.location.reload();
+      }, 1000)
       
   
     } catch (error) {
@@ -183,7 +187,7 @@ export default function Builder(props) {
 }
 
   useEffect(() => {
-    receber()    
+    receber()
   },[])
 
     useEffect(() => {
@@ -201,14 +205,9 @@ export default function Builder(props) {
               <h1>Excluir Bloco?</h1>
 
               <ul>
-                <li onClick={()=>deleteBloco()}>Confirmar</li>  
+                <li onClick={()=>deleteBloco()}>Confirmar</li>                  
                 <li onClick={()=>openModal()}>Cancelar</li>
               </ul>
-                <Snackbar open={openDelete} autoHideDuration={6000} onClose={handleCloseDelete}>
-                  <Alert onClose={handleCloseDelete} severity="error">
-                    Bloco excluido!
-                  </Alert>
-                </Snackbar>
               
           </div>
         </div>
@@ -248,6 +247,11 @@ export default function Builder(props) {
             </div>        
 
           </div>
+          <Snackbar open={openDelete} autoHideDuration={1000} onClose={handleCloseDelete}>
+            <Alert onClose={handleCloseDelete} severity="error">
+              Bloco excluido!
+            </Alert>
+          </Snackbar>
     </div>
     
   );
