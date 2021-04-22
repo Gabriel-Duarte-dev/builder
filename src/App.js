@@ -2,6 +2,7 @@ import './App.css';
 import React from 'react';
 import api from './api.js'
 import Builder from './Builder.js'
+import route from './route.js'
 import {useParams} from 'react-router-dom'
 import {useEffect, useState} from 'react'
 
@@ -15,6 +16,8 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import AddIcon from '@material-ui/icons/Add';
 
 import texxia from './imagens/texxia.png'
+// import logo from './imagens/logo.png'
+import logo2 from './imagens/logo2.png'
 
 function App(props) {
   
@@ -25,13 +28,55 @@ function App(props) {
 
   const [blocos, setarBlocos] = useState([]);
 
+  const [optionValue, setOptionValue] = useState([    
+    "Boas vindas",    
+    "O que gostaria de saber?",
+    "Saudação-Nome",
+    "Apresentação",
+    "Não entendi simulação",
+    "Simulação-Valores",
+    "FGTS",
+    "Entrada",
+    "Fim Simulção",
+    "Agradecimento",
+    "Animal",
+    "Condomíno",
+    "Lazer",
+    "Localização",
+    "Erro padrão",
+    "Contatos",
+    "Visita",
+    "Final Visita",
+    "Escola",
+    "Construção",
+    "Incorporadora",
+    "Segurança Bairro",
+    "Entrega Obras",
+    "Documentação Cliente",
+    "Documentação Projeto",
+    "Juros",
+    "Agua-Luz-Gás",
+    "Mais alguma coisa?",
+    "Alagamento",
+    "Tamanho Plantas",
+    "Estoque",
+    "Entorno",
+    "Fim Chat",
+    "Hospital",
+    "Infraestrutura",
+    "IPTU",
+  ]);
+
   async function receber(){
 
     try{
       const response = await api.get('/api/bloco/'+id)
       const data = response.data
       setarBlocos(data)
-      console.log(data)
+      console.log(data)            
+
+      await getBlocos()
+
     } catch (error) {
       console.log(error)
     }
@@ -48,7 +93,7 @@ function App(props) {
         botSid: id,      
         nomeBloco: nomeBot
     })    
-    receber()    
+    receber()
     console.log(response);
     } catch (error) {
       console.log(error)
@@ -94,19 +139,40 @@ function App(props) {
       '&:hover': {
         background: '#6a1b9a'
       }
+    },
+
+    option: {
+      fontSize: '12px !important'      
     }
   }));
 
   const classes = useStyles();
   const [age, setAge] = React.useState('');
+
+  async function getBlocos(){
+    try {
+      const response = await api.get('/api/bloco/'+id)
+      const data = response.data
+
+      const newArray = optionValue.filter(o1 => !data.some(o2 => o1 == o2.nomeBloco))
+      setOptionValue(newArray)
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  // const arrayOptions =  [
+  //   "Boas vindas", "O que gostaria de saber?", "Saudação-Nome", "Apresentação"
+  // ]  
   
   return (
-    
-    <div className="App">
+
+    <div className="App">    
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css"></link>
 
       {
-        modal?
+        modal?        
         <div className="modal">          
           <div className="modalContent">
             <i onClick={()=>openModal()} className="fas fa-times"></i>
@@ -114,38 +180,15 @@ function App(props) {
             <FormControl variant="outlined">
             <InputLabel>Selecione o bloco</InputLabel>
               <Select onChange={(text)=>setNomeBot(text.target.value)} label="Selecione o bloco" className="namesBlocos">
-                <MenuItem value="">None</MenuItem>
-                <MenuItem value="Inicio">Inicio</MenuItem>
-                <MenuItem value="Boas vindas">Boas vindas</MenuItem>
-                <MenuItem value="Cidade">Cidade</MenuItem>
-                <MenuItem value="E-mail">E-mail</MenuItem>
-                <MenuItem value="O que gostaria de saber?">O que gostaria de saber?</MenuItem>
-                <MenuItem value="Saudação-Nome">Saudação-Nome</MenuItem>
-                <MenuItem value="Apresentação">Apresentação</MenuItem>
-                <MenuItem value="Não entendi simulação">Não entendi simulação</MenuItem>
-                <MenuItem value="Simulação-Valores">Simulação-Valores</MenuItem>
-                <MenuItem value="FGTS">FGTS</MenuItem>
-                <MenuItem value="Entrada">Entrada</MenuItem>
-                <MenuItem value="Fim Simulção">Fim Simulção</MenuItem>
-                <MenuItem value="Agradecimento">Agradecimento</MenuItem>
-                <MenuItem value="Animal">Animal</MenuItem>
-                <MenuItem value="Condomíno">Condomíno</MenuItem>
-                <MenuItem value="Lazer">Lazer</MenuItem>
-                <MenuItem value="Localização">Localização</MenuItem>
-                <MenuItem value="Erro padrão">Erro padrão</MenuItem>
-                <MenuItem value="Contatos">Contatos</MenuItem>
-                <MenuItem value="Visita">Visita</MenuItem>
-                <MenuItem value="Final Visita">Final Visita</MenuItem>
-                <MenuItem value="Escola">Escola</MenuItem>
-                <MenuItem value="Construção">Construção</MenuItem>
-                <MenuItem value="Incorporadora">Incorporadora</MenuItem>
-                <MenuItem value="Segurança Bairro">Segurança Bairro</MenuItem>
-                <MenuItem value="Entrega Obras">Entrega Obras</MenuItem>
-                <MenuItem value="Documentação Cliente">Documentação Cliente</MenuItem>
-                <MenuItem value="Documentação Projeto">Documentação Projeto</MenuItem>
-                <MenuItem value="Juros">Juros</MenuItem>
-                <MenuItem value="Agua-Luz-Gás">Agua-Luz-Gás</MenuItem>
-                <MenuItem value="Mais alguma coisa?">Mais alguma coisa?</MenuItem>
+
+              {
+                optionValue.map((value, index) =>{
+                  return(
+                    <MenuItem className={classes.option} value={value} key={index}>{value}</MenuItem>
+                  )
+                })
+              }
+                
               </Select>
             </FormControl>           
             {/* <h6 onClick={()=>salvarBloco()}>Adicionar</h6> */}
@@ -164,12 +207,14 @@ function App(props) {
       }      
 
        <header>
-         <h1>Logo</h1>
+        <div className="box-logo">
+          <img className="logo" src={logo2} />
+        </div>        
          <ul>
-           <li>botao</li>
-           <li>botao</li>
-           <li>botao</li>
-           <li>botao</li>
+           <li>Usuário</li>
+           <li>Template</li>
+           <li>Intenções</li>
+           <li>Integração</li>
          </ul>
        </header>
 

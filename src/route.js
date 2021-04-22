@@ -1,13 +1,16 @@
 import './App.css';
+import React from 'react'
 import App from './App.js'
 // import api from './api.js'
 // import {useEffect, useState} from 'react';
+
+import Home from './Home.jsx'
 
 import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
+    
     
   } from "react-router-dom";
 
@@ -16,8 +19,9 @@ import {
     return (
       <Router>
         <div>                                
-          <Switch>            
-            <Route path="/:id" children={<App var={"1234"} />} />            
+          <Switch>
+            <Route path="/home" children={<Home/>} />
+            <Route path="/:id" children={<App var={"1234"} />} />
           </Switch>
         </div>
       </Router>

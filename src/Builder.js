@@ -49,7 +49,7 @@ export default function Builder(props) {
   const [openDelete, setOpenDelete] = React.useState(false);
 
   // const handleClick = () => {
-    
+  //   setOpen(true)
   // };
 
   const handleClose = (event, reason) => {
@@ -92,7 +92,7 @@ export default function Builder(props) {
 
   const addTask = task => {
     setTask([...tasks, task]);
-    console.log(tasks)
+    console.log(tasks)    
   };
 
   const deleteTask = index => {
@@ -116,9 +116,7 @@ export default function Builder(props) {
     const data = response_get.data
     const dados = {
       nomeBloco: data.nomeBoloco,
-      mensagem: tasks      
-  
-    
+      mensagem: tasks
   } 
   console.log(dados);
     const response = await api.patch('/api/bloco/'+props.blocoID, 
@@ -126,7 +124,7 @@ export default function Builder(props) {
     );
 
   //  alert('Conversa Salva!');
-  setOpen(true);
+  setOpen(true)
 
     console.log(response);
 
@@ -154,20 +152,6 @@ export default function Builder(props) {
       }    
   }   
 
-  // async function getNameBot() {
-  //   try {
-  //     const response = await api.get('/api/bot/'+botID);
-
-  //     const nameBot = response.data
-
-  //     // setBotName(nameBot)      
-  //     console.log(nameBot)
-      
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-
   async function deleteBloco() {
     try {      
       const response = await api.delete('/api/bloco/'+props.blocoID);      
@@ -185,6 +169,11 @@ export default function Builder(props) {
         console.log(error)
     }
 }
+
+// function teste (){
+
+//   alert('teste')
+// }
 
   useEffect(() => {
     receber()
@@ -216,7 +205,7 @@ export default function Builder(props) {
       }
       
       <div className="titleBloco">
-        <h2><i class="fas fa-tag"></i> <span className="botName">{botName}</span> - {nomeBloco}</h2>
+        <h2><i className="fas fa-tag"></i> <span className="botName">{botName}</span> - {nomeBloco}</h2>
         {/* <span onClick={()=>openModal()}><i class="fas fa-trash"></i>Excluir Bloco</span> */}
         <Button
         variant="contained"        
@@ -236,7 +225,7 @@ export default function Builder(props) {
 
             <div className="saveMsg">
               <h2 className="botaoenviar"
-              onClick = {() => enviar()} >
+              onClick = {() => {enviar()}} >
               <CheckIcon className="saved" color="primary" style={{ fontSize: 50, color: green[500], cursor: 'pointer' }} />
               </h2>
               <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>

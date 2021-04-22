@@ -63,7 +63,7 @@ export default function List(props) {
                         </div> */}
 
                         <div className="btn">
-                            <i onClick={()=>props.deleteTask(index)} class="fas fa-trash-alt botaoexcluir"></i>
+                            <i onClick={()=>props.deleteTask(index)} className="fas fa-trash-alt botaoexcluir"></i>
                             {/* <button className="botaoexcluir" onClick={()=>props.deleteTask(index)}> Excluir </button> */}
                         </div>
 
