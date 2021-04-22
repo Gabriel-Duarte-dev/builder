@@ -9,7 +9,7 @@ function Home(props) {
     return(
 
         <>
-            <Link to="/c22f6671"><buttom>teste</buttom></Link>
+            <Link to="/b3f1a897"><buttom>BUILDER</buttom></Link>
         </>        
     )
 }

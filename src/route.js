@@ -20,7 +20,7 @@ import {
       <Router>
         <div>                                
           <Switch>
-            <Route path="/home" children={<Home/>} />
+            <Route path="/" exact children={<Home/>} />
             <Route path="/:id" children={<App var={"1234"} />} />
           </Switch>
         </div>
