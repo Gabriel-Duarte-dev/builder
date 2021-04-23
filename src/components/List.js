@@ -52,10 +52,7 @@ export default function List(props) {
                             :
                             <div className="txt">
                                 <TextareaAutosize id="textarea" onChange={(event) => props.editTask(index, event)} value={task}/>
-                            </div>
-                            // <div className="txt">
-                            //     <TextareaAutosize id="textarea" onChange={(event) => props.editTask(index, event)} value={task}/>
-                            // </div>
+                            </div>                            
                         }                        
 
                         {/* <div className="txt">

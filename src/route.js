@@ -1,10 +1,10 @@
 import './App.css';
 import React from 'react'
 import App from './App.js'
+import Home from './pages/Home.jsx'
 // import api from './api.js'
 // import {useEffect, useState} from 'react';
 
-import Home from './Home.jsx'
 
 import {
     BrowserRouter as Router,

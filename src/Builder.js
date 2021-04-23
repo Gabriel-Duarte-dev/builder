@@ -12,7 +12,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Icon from '@material-ui/core/Icon';
 import CheckIcon from '@material-ui/icons/Check';
-import { green } from '@material-ui/core/colors';
+import { green, purple } from '@material-ui/core/colors';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import {useParams} from 'react-router-dom'
 
@@ -39,8 +40,6 @@ const useStyles = makeStyles((theme) => ({
     }
   }
 }));
-
-
 
 export default function Builder(props) {
   
@@ -85,6 +84,8 @@ export default function Builder(props) {
   const [botName, setBotName] = useState("");    
 
   const [modalDelete, setModalDelete] = useState(false);
+
+  const [loading, setLoading] = useState(true);
 
   const openModal = () => {
     setModalDelete(!modalDelete);
@@ -131,6 +132,7 @@ export default function Builder(props) {
   } 
 
   async function receber() {
+    setLoading(true)
       try {
         const response = await api.get('/api/bloco/'+props.blocoID);
         const response2 = await api.get('/api/bot/'+id);
@@ -146,9 +148,11 @@ export default function Builder(props) {
         setBotName(nameBot.botName)
         console.log(nameBot)
         console.log(response2.status)
+        
+        setLoading(false)
     
       } catch (error) {
-          console.log(error)
+          console.log(error)          
       }    
   }   
 
@@ -185,6 +189,17 @@ export default function Builder(props) {
 
   return (
     <div className="wrap">
+
+      {
+        loading?
+        <div className="modal">
+          <div className="loadingContent">
+            <CircularProgress style={{color: purple[800]}} />
+          </div>
+        </div>
+        :
+        console.log()
+      }
 
       {
         modalDelete?

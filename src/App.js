@@ -3,6 +3,7 @@ import React from 'react';
 import api from './api.js'
 import Builder from './Builder.js'
 import route from './route.js'
+import Header from './pages/Header.jsx'
 import {useParams} from 'react-router-dom'
 import {useEffect, useState} from 'react'
 
@@ -14,10 +15,12 @@ import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import AddIcon from '@material-ui/icons/Add';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { purple } from '@material-ui/core/colors';
 
 import texxia from './imagens/texxia.png'
-// import logo from './imagens/logo.png'
-import logo2 from './imagens/logo2.png'
+// import loadingIcon from './imagens/loading.gif'
+// import logo2 from './imagens/logo2.png'
 
 function App(props) {
   
@@ -27,6 +30,8 @@ function App(props) {
   const [blocoID, setBlocoID] = useState("");
 
   const [blocos, setarBlocos] = useState([]);
+
+  const [loading, setLoading] = useState(true);
 
   const [optionValue, setOptionValue] = useState([    
     "Boas vindas",    
@@ -75,7 +80,10 @@ function App(props) {
       setarBlocos(data)
       console.log(data)            
 
-      await getBlocos()
+      await getBlocos()     
+      setLoading(false) 
+
+      // await setLoading(true)
 
     } catch (error) {
       console.log(error)
@@ -83,9 +91,11 @@ function App(props) {
   }
 
   const [modal, setModal] = useState(false);
+  
 
   const salvarBloco = async () => {    
 
+    setLoading(true)
     console.log("id:"+id)
     console.log("nomeBot:"+nomeBot)
     try {
@@ -94,6 +104,7 @@ function App(props) {
         nomeBloco: nomeBot
     })    
     receber()
+    setLoading(false)
     console.log(response);
     } catch (error) {
       console.log(error)
@@ -119,12 +130,12 @@ function App(props) {
 
   const openBuilder = (id) => {
     // setBuilder(!builder);
-
+        
     setBlocoID(id)
   }  
 
   useEffect(() => {
-    receber()
+    receber()    
   },[])
 
   const useStyles = makeStyles((theme) => ({
@@ -171,9 +182,21 @@ function App(props) {
     <div className="App">    
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css"></link>
 
+     {
+       loading?
+       <div className="modal">
+         <div className="loadingContent">
+          {/* <img src={loadingIcon} className="loadingIcon"/> */}
+          <CircularProgress style={{color: purple[800]}} />
+         </div>
+       </div>
+       :
+       console.log()
+     }
+
       {
         modal?        
-        <div className="modal">          
+        <div className="modal">
           <div className="modalContent">
             <i onClick={()=>openModal()} className="fas fa-times"></i>
             <h3>Adicionar Bloco</h3>
@@ -206,17 +229,7 @@ function App(props) {
         <div></div>
       }      
 
-       <header>
-        <div className="box-logo">
-          <img className="logo" src={logo2} />
-        </div>        
-         <ul>
-           <li>Usuário</li>
-           <li>Template</li>
-           <li>Intenções</li>
-           <li>Integração</li>
-         </ul>
-       </header>
+      <Header/>      
 
        <div className="blocos">         
          {/* <h3 onClick={()=>openModal()}>Add Bloco +</h3> */}
