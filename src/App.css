@@ -96,6 +96,11 @@ header ul li{
   box-shadow: 0px 20px 15px -15px rgba(0, 0, 0, 0.849);
 }
 
+.loadingIcon{
+  width: 120px;
+  height: 119px;
+}
+
 .modal{
   text-align: center;  
   position: fixed;

@@ -19,7 +19,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { purple } from '@material-ui/core/colors';
 
 import texxia from './imagens/texxia.png'
-// import loadingIcon from './imagens/loading.gif'
+import loadingIcon from './imagens/loading.gif'
 // import logo2 from './imagens/logo2.png'
 
 function App(props) {
@@ -186,8 +186,8 @@ function App(props) {
        loading?
        <div className="modal">
          <div className="loadingContent">
-          {/* <img src={loadingIcon} className="loadingIcon"/> */}
-          <CircularProgress style={{color: purple[800]}} />
+          <img src={loadingIcon} className="loadingIcon"/>
+          {/* <CircularProgress style={{color: purple[800]}} /> */}
          </div>
        </div>
        :

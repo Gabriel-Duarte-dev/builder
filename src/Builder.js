@@ -16,6 +16,7 @@ import { green, purple } from '@material-ui/core/colors';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import {useParams} from 'react-router-dom'
+import loadingIcon from './imagens/loading.gif'
 
 
 function Alert(props) {
@@ -194,7 +195,8 @@ export default function Builder(props) {
         loading?
         <div className="modal">
           <div className="loadingContent">
-            <CircularProgress style={{color: purple[800]}} />
+            {/* <CircularProgress style={{color: purple[800]}} /> */}
+            <img src={loadingIcon} className="loadingIcon"/>
           </div>
         </div>
         :
