@@ -1,5 +1,6 @@
 import React from 'react'
 import '../App.css';
+import {Link} from 'react-router-dom'
 
 
 import logo from '../imagens/logo.png'
@@ -12,7 +13,7 @@ function Header(props){
 
         <header>
             <div className="box-logo">
-                <img className="logo" src={logo} />
+                <Link to="/" style={{ textDecoration:'none'}}><img className="logo" src={logo} /></Link>
             </div>        
             <ul>
                 <li>Usuário</li>

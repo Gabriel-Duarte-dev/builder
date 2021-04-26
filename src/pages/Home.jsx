@@ -166,7 +166,7 @@ const [botTelefone, setBotTelefone] = useState('');
   const body = (
     <div  className={classes.paper}>
 
-      <h1 className={classes.modalTitle}>Creat Bot</h1>
+      <h1 className={classes.modalTitle}>Create Bot</h1>
 
       <form className="formNewBot">
 
@@ -183,7 +183,7 @@ const [botTelefone, setBotTelefone] = useState('');
         
         <div></div>
         <Button variant="contained" className={classes.modalButton} onClick={handleClose}> Close </Button>
-        <Button variant="contained" className={classes.modalButton} onClick={enviar}> Send BOT  </Button>
+        <Button variant="contained" className={classes.modalButton} onClick={enviar}> Create BOT  </Button>
 
       </form>            
     </div>
@@ -207,7 +207,7 @@ const [botTelefone, setBotTelefone] = useState('');
           endIcon={<AddIcon />}        
           onClick={()=>handleOpen()}
         >
-          Creat Bot
+          Create Bot
         </Button>
 
         <Modal open={open} onClose={handleClose} aria-labelledby="simple-modal-title" aria-describedby="simple-modal-description"
