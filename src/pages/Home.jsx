@@ -22,14 +22,14 @@ import { red } from '@material-ui/core/colors'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import BuildIcon from '@material-ui/icons/Build';
 import TextField from '@material-ui/core/TextField';
-// import MaskedInput from 'react-maskedinput'
-// import InputMask from 'react-input-mask'
-
-// import MaskedInput from 'react-text-mask';
-// import PropTypes from 'prop-types';
-// import FormControl from '@material-ui/core/FormControl';
+import InputMask from 'react-input-mask'
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 // COMEÇOS DAS FUNÇÕES QUE TEM QUE SER DEFINIDAS ANTES
 
@@ -45,8 +45,7 @@ paper: {
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
     textAlign: 'center'
-  },
-  
+  },  
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9
@@ -83,7 +82,19 @@ paper: {
   inputNewBot: {
     padding: '20px 0',
     maxWidth: '300px',
-    width: '100%'
+    width: '100%',    
+  },
+  inputMask: {
+    border: 0,
+    margin: '20px 0',
+    padding: '10px 0',
+    maxWidth: '300px',
+    width: '100%',
+    borderBottom: '2px solid #a5a5a5d9',
+    outline: 0,
+    '&:focus, &:hover': {
+      borderColor: '#3F5AA9'
+    },    
   },
   modalButton: {
     margin: '40px 30px',    
@@ -93,12 +104,14 @@ paper: {
 
 // FIM DAS FUNÇÕES QUE TEM QUE SER DEFINIDAS ANTES
 
-export default function PageHome() {
+export default function PageHome(props) {
 
   const classes = useStyles();
   
   const [tasks, setTask] = useState([]);
-  const [open, setOpen] = React.useState(false);    
+  const [open, setOpen] = React.useState(false);   
+  
+  const [alertOpen, setAlertOpen] = React.useState(false);  
 
   const handleOpen = () => {
     setOpen(true);
@@ -106,6 +119,14 @@ export default function PageHome() {
 
   const handleClose = () => {
     setOpen(false);
+  };  
+
+  const alertClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setAlertOpen(false);
   };  
 
   async function enviar() {
@@ -117,6 +138,7 @@ export default function PageHome() {
     )
     receber()
     setOpen(false);
+    setAlertOpen(true)
   }
 
 // FUNCTION PARA RECEBER DADOS DA API
@@ -144,7 +166,7 @@ const [botTelefone, setBotTelefone] = useState('');
   const body = (
     <div  className={classes.paper}>
 
-      <h1 className={classes.modalTitle}>Criar Bot</h1>
+      <h1 className={classes.modalTitle}>Creat Bot</h1>
 
       <form className="formNewBot">
 
@@ -153,19 +175,17 @@ const [botTelefone, setBotTelefone] = useState('');
           onChange={(texto) => setBotNome(texto.target.value)} 
           placeholder="Digite o nome do bot"/>
         <div></div>
-        <TextField
-        className={classes.inputNewBot} 
+        <InputMask
+        className={classes.inputMask} 
         onChange={(texto) => setBotTelefone(texto.target.value)} 
-        placeholder="+55999999999"
-        >
-          {/* <InputMask mask="+55 999999999"></InputMask> */}
-        </TextField>
+        placeholder="+55999999999"        
+        mask="+55 999999999" />          
+        
         <div></div>
-        <Button variant="contained" className={classes.modalButton} onClick={handleClose}> Fechar </Button>
-        <Button variant="contained" className={classes.modalButton} onClick={enviar}> Enviar BOT  </Button>
+        <Button variant="contained" className={classes.modalButton} onClick={handleClose}> Close </Button>
+        <Button variant="contained" className={classes.modalButton} onClick={enviar}> Send BOT  </Button>
 
-      </form>
-       
+      </form>            
     </div>
   );
 
@@ -175,7 +195,11 @@ const [botTelefone, setBotTelefone] = useState('');
     <div className="homeContent">
         <Header/>
 
-       
+        <Snackbar open={alertOpen} autoHideDuration={2000} onClose={alertClose}>
+          <Alert onClose={alertClose} severity="success">
+            Created Bot successful!
+          </Alert>
+        </Snackbar>
 
         <Button
           variant="contained"        
@@ -183,7 +207,7 @@ const [botTelefone, setBotTelefone] = useState('');
           endIcon={<AddIcon />}        
           onClick={()=>handleOpen()}
         >
-          Criar Bot
+          Creat Bot
         </Button>
 
         <Modal open={open} onClose={handleClose} aria-labelledby="simple-modal-title" aria-describedby="simple-modal-description"
@@ -202,13 +226,23 @@ function NewList(props) {
   const { tasks, refresh } = props;
   const classes = useStyles();
   const [modalDelete, setModalDelete] = useState(false)
+  const [alertOpenDelete, setAlertOpenDelete] = React.useState(false);
 
+
+  const alertCloseDelete = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setAlertOpenDelete(false);
+  };
 
   async function deleteBot(id) {
     try {
       const response = await api.delete('/api/bot/'+id)
       refresh()
       setModalDelete(false)
+      setAlertOpenDelete(true);
     } catch (error) {
       console.log(error)
     }
@@ -225,6 +259,12 @@ function NewList(props) {
         return (
           <div className="cardBots-Content" key={index}>
 
+            <Snackbar open={alertOpenDelete} autoHideDuration={2000} onClose={alertCloseDelete}>
+              <Alert onClose={alertCloseDelete} severity="error">
+                Bot successfully deleted!
+              </Alert>
+            </Snackbar>
+
             {
               modalDelete?
               <div className="modal">
@@ -233,8 +273,8 @@ function NewList(props) {
                     <h1>Excluir Bot?</h1>
 
                     <ul>
-                      <li onClick={()=>deleteBot(task.id)}>Confirmar</li>
-                      <li onClick={()=>openModal()}>Cancelar</li>
+                      <li onClick={()=>deleteBot(task.id)}>Confirm</li>
+                      <li onClick={()=>openModal()}>Cancel</li>
                     </ul>
                     
                 </div>
@@ -243,7 +283,7 @@ function NewList(props) {
               console.log()
             }
 
-            <Card className={classes.root}>
+            <Card elevation={3} className={classes.root}>
               <CardHeader 
                 avatar={
                   <Avatar arial-label="recipe" className={classes.avatar} src="https://maishm.com.br/storage/news/novo-posicionamento-de-marca.png">
@@ -268,7 +308,7 @@ function NewList(props) {
                   startIcon={<DeleteForeverIcon />}
                   onClick={()=>{openModal()}}
                 >
-                  Excluir
+                  Delete
                 </Button>
 
                 <Link to={`/${task.botSid}`} style={{ textDecoration:'none'}}>
