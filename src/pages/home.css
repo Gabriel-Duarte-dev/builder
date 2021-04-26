@@ -1,0 +1,23 @@
+.homeContent{    
+    width: 100%;
+    height: 100%;    
+}
+
+.homeContent .addBot{
+    position: absolute;
+    right: 20px;
+    top: 100px;
+}
+
+.cardBots{
+    margin-top: 50px;
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.cardBots .cardBots-Content{    
+    max-width: 300px;
+    margin: 10px 14px;
+}

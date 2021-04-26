@@ -15,12 +15,11 @@ import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import AddIcon from '@material-ui/icons/Add';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { purple } from '@material-ui/core/colors';
+// import CircularProgress from '@material-ui/core/CircularProgress';
+// import { purple } from '@material-ui/core/colors';
 
 import texxia from './imagens/texxia.png'
 import loadingIcon from './imagens/loading.gif'
-// import logo2 from './imagens/logo2.png'
 
 function App(props) {
   
@@ -179,8 +178,7 @@ function App(props) {
   
   return (
 
-    <div className="App">    
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css"></link>
+    <div className="App">          
 
      {
        loading?
