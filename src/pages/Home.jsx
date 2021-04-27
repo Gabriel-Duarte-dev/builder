@@ -26,6 +26,8 @@ import InputMask from 'react-input-mask'
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 
+import loadingIcon from '../imagens/loading.gif'
+import iconModal from '../imagens/iconModal.png'
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -39,13 +41,19 @@ paper: {
     left: '50%',
     top: '50%',
     transform: `translate(-50%, -50%)`,
-    width: 500,    
+    width: 500,  
+    border: 0,
+    outline: 0,
     borderRadius: '5px',
     backgroundColor: theme.palette.background.paper,    
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
     textAlign: 'center'
   },  
+  root: {
+    '&:hover': {
+      boxShadow: '0px 4px 15px -5px rgba(0,0,0,0.75)',
+      cursor: 'pointer'
+    },
+  },
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9
@@ -74,7 +82,43 @@ paper: {
     color: '#fff',
     '&:hover': {
       backgroundColor: '#0055C8 !important'
-    }
+    },
+  },
+  confirmButton: {
+    marginTop: '110px',  
+    
+    marginRight: '30px',
+    backgroundColor: '#44bd32',
+    color: '#fff',
+    '&:hover': {
+      backgroundColor: '#6ab04c !important'
+    },
+  },
+  cancelBtton: {    
+    marginTop: '110px',  
+    
+    marginLeft: '40px',
+    backgroundColor: 'rgb(255, 74, 74)',
+    color: '#fff',
+    '&:hover': {
+      backgroundColor: 'rgb(206, 5, 5) !important'
+    },
+  },
+  creatBotButtonClose: {
+    margin: '40px 30px',
+    backgroundColor: 'rgb(255, 74, 74)',
+    color: '#fff',
+    '&:hover': {
+      backgroundColor: 'rgb(206, 5, 5) !important'
+    },
+  },
+  creatBotButtonCreat: {
+    margin: '40px 30px',
+    backgroundColor: 'rgb(139, 0, 204)',
+    color: '#fff',
+    '&:hover': {
+      backgroundColor: 'rgb(116, 0, 170) !important'
+    },
   },
   modalTitle: {
     marginBottom: '40px'
@@ -97,7 +141,7 @@ paper: {
     },    
   },
   modalButton: {
-    margin: '40px 30px',    
+    margin: '40px 30px',
   }
 }));
 
@@ -109,7 +153,8 @@ export default function PageHome(props) {
   const classes = useStyles();
   
   const [tasks, setTask] = useState([]);
-  const [open, setOpen] = React.useState(false);   
+  const [open, setOpen] = React.useState(false); 
+  const [loading, setLoading] = useState(true);  
   
   const [alertOpen, setAlertOpen] = React.useState(false);  
 
@@ -129,24 +174,38 @@ export default function PageHome(props) {
     setAlertOpen(false);
   };  
 
-  async function enviar() {
-    const response_get = await api.post('/api/bot/register',
+  const [disable, setDisable] =  useState(false)
+
+  async function enviar() {    
+    setDisable(true)
+    try {
+      const response_get = await api.post('/api/bot/register',
       {
       botName: botNome,
       botTelefone: botTelefone
     }
     )
     receber()
+    setDisable(false)
     setOpen(false);
     setAlertOpen(true)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
 // FUNCTION PARA RECEBER DADOS DA API
 async function receber() {
+  setLoading(true)
+  try {
   const response_get = await api.get('/api/bot')
   const data = response_get.data
   setTask(data)
   console.log(data);
+  setLoading(false)
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // USE EFFECT PARA RECEBER DADOS DA API
@@ -164,9 +223,12 @@ const [botTelefone, setBotTelefone] = useState('');
 
 
   const body = (
-    <div  className={classes.paper}>
+    <div className={classes.paper}>
 
-      <h1 className={classes.modalTitle}>Create Bot</h1>
+      <div className="modalHeader">
+        <img src={iconModal} className="icon" />
+        <h1 className={classes.modalTitle}>Create Bot</h1>
+      </div>      
 
       <form className="formNewBot">
 
@@ -182,8 +244,8 @@ const [botTelefone, setBotTelefone] = useState('');
         mask="+55 999999999" />          
         
         <div></div>
-        <Button variant="contained" className={classes.modalButton} onClick={handleClose}> Close </Button>
-        <Button variant="contained" className={classes.modalButton} onClick={enviar}> Create BOT  </Button>
+        <Button variant="contained" className={classes.creatBotButtonClose} onClick={handleClose}> Close </Button>
+        <Button variant="contained" disabled={disable} className={classes.creatBotButtonCreat} onClick={enviar}> Create BOT  </Button>
 
       </form>            
     </div>
@@ -200,6 +262,17 @@ const [botTelefone, setBotTelefone] = useState('');
             Created Bot successful!
           </Alert>
         </Snackbar>
+
+          {
+            loading?
+            <div className="modal">
+              <div className="loadingContent">                
+                <img src={loadingIcon} className="loadingIcon"/>
+              </div>
+            </div>
+            :
+            console.log()
+          }
 
         <Button
           variant="contained"        
@@ -226,6 +299,7 @@ function NewList(props) {
   const { tasks, refresh } = props;
   const classes = useStyles();
   const [modalDelete, setModalDelete] = useState(false)
+  
   const [alertOpenDelete, setAlertOpenDelete] = React.useState(false);
 
 
@@ -270,12 +344,32 @@ function NewList(props) {
               <div className="modal">
                 <div className="modalContent">
                   <i onClick={()=>openModal()} className="fas fa-times"></i>
-                    <h1>Excluir Bot?</h1>
+                    
+                    <div className="modalHeader">
+                      <img src={iconModal} className="icon" />
+                      <h1>Delete Bot?</h1>
+                    </div>                    
 
-                    <ul>
+                    <Button
+                      variant="contained"        
+                      className={classes.confirmButton}                      
+                      onClick={()=>deleteBot(task.id)}
+                    >
+                      Confirm
+                    </Button>
+
+                    <Button
+                      variant="contained"        
+                      className={classes.cancelBtton}                      
+                      onClick={()=>openModal()}
+                    >
+                      Cancel
+                    </Button>
+
+                    {/* <ul>
                       <li onClick={()=>deleteBot(task.id)}>Confirm</li>
                       <li onClick={()=>openModal()}>Cancel</li>
-                    </ul>
+                    </ul> */}
                     
                 </div>
               </div>
@@ -283,7 +377,7 @@ function NewList(props) {
               console.log()
             }
 
-            <Card elevation={3} className={classes.root}>
+            <Card className={classes.root}>
               <CardHeader 
                 avatar={
                   <Avatar arial-label="recipe" className={classes.avatar} src="https://maishm.com.br/storage/news/novo-posicionamento-de-marca.png">
@@ -306,7 +400,7 @@ function NewList(props) {
                   variant="contained"        
                   className={classes.button}
                   startIcon={<DeleteForeverIcon />}
-                  onClick={()=>{openModal()}}
+                  onClick={()=>{openModal()}}                  
                 >
                   Delete
                 </Button>

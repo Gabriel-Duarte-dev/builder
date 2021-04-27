@@ -3,7 +3,7 @@
   height: 100%;
 }
 
-.modalContent ul{
+/* .modalContent ul{
   text-align: center;
   margin-top: 70px;
 }
@@ -24,7 +24,7 @@
 .modalContent li:last-child:hover{
   background: rgb(255, 84, 84);
   color: #fff;
-}
+} */
 
 .titleBloco{
   border-bottom: 1px solid #1111113f;

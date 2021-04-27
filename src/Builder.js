@@ -17,6 +17,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 import {useParams} from 'react-router-dom'
 import loadingIcon from './imagens/loading.gif'
+import iconModal from './imagens/iconModal.png'
 
 
 function Alert(props) {
@@ -39,6 +40,26 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       backgroundColor: 'rgb(206, 5, 5) !important'
     }
+  },
+  confirmButton: {
+    marginTop: '110px',  
+    
+    marginRight: '30px',
+    backgroundColor: '#44bd32',
+    color: '#fff',
+    '&:hover': {
+      backgroundColor: '#6ab04c !important'
+    },
+  },
+  cancelBtton: {    
+    marginTop: '110px',  
+    
+    marginLeft: '40px',
+    backgroundColor: 'rgb(255, 74, 74)',
+    color: '#fff',
+    '&:hover': {
+      backgroundColor: 'rgb(206, 5, 5) !important'
+    },
   }
 }));
 
@@ -208,12 +229,27 @@ export default function Builder(props) {
         <div className="modal">
           <div className="modalContent">
             <i onClick={()=>openModal()} className="fas fa-times"></i>
-              <h1>Excluir Bloco?</h1>
+              
+              <div className="modalHeader">
+                <img src={iconModal} className="icon" />
+                <h1>Delete Bot?</h1>
+              </div> 
 
-              <ul>
-                <li onClick={()=>deleteBloco()}>Confirmar</li>                  
-                <li onClick={()=>openModal()}>Cancelar</li>
-              </ul>
+              <Button
+                variant="contained"        
+                className={classes.confirmButton}                      
+                onClick={()=>deleteBloco()}
+              >
+                Confirm
+              </Button>
+
+              <Button
+                variant="contained"        
+                className={classes.cancelBtton}                      
+                onClick={()=>openModal()}
+              >
+                Cancel
+              </Button>              
               
           </div>
         </div>

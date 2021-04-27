@@ -20,6 +20,7 @@ import AddIcon from '@material-ui/icons/Add';
 
 import texxia from './imagens/texxia.png'
 import loadingIcon from './imagens/loading.gif'
+import iconModal from './imagens/iconModal.png'
 
 function App(props) {
   
@@ -197,8 +198,12 @@ function App(props) {
         <div className="modal">
           <div className="modalContent">
             <i onClick={()=>openModal()} className="fas fa-times"></i>
-            <h3>Adicionar Bloco</h3>
-            <FormControl variant="outlined">
+              <div className="modalHeader">
+                <img src={iconModal} className="icon" />
+                <h1>Aicionar Bot</h1>
+              </div>
+
+            <FormControl variant="outlined" className="formSelect">
             <InputLabel>Selecione o bloco</InputLabel>
               <Select onChange={(text)=>setNomeBot(text.target.value)} label="Selecione o bloco" className="namesBlocos">
 
