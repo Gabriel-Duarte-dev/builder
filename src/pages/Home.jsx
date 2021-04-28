@@ -8,6 +8,8 @@ import api from '../api'
 import '../components/Modal'
 import { makeStyles } from '@material-ui/core/styles'
 import Modal from '@material-ui/core/Modal'
+import MaskedInput from "react-text-mask";
+
 
 import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
@@ -149,6 +151,8 @@ paper: {
     marginRight: '30px',
     marginTop: '40px',
     marginBottom: '40px',
+    paddingLeft: '30px',
+    paddingRight: '30px',
     backgroundColor: '#44bd32',
     color: '#fff',
     '&:hover': {
@@ -328,7 +332,9 @@ function NewList(props) {
   const [botNameID, setBotNameID] = useState("")
 
   const [avatarImg, setAvatarImg] = useState("")
+  const [capaImg, setCapaImg] = useState("")
   const [attBotName, setAttBotName] = useState("")
+  const [botPhoneNumber, setBotPhoneNumber] = useState("")
   
   const [alertOpenDelete, setAlertOpenDelete] = React.useState(false);
 
@@ -357,12 +363,15 @@ function NewList(props) {
       const response_get = await api.get('api/bot/'+id)
       const data = response_get.data
       const dados = {        
-        botName: attBotName
+        botName: attBotName,
+        botTelefone: botPhoneNumber,
+        botAvatar: avatarImg,
+        botCapa: capaImg
       }
-      refresh()
       setModalEdit(!modalEdit)
       console.log(dados)
       const response = await api.patch('api/bot/'+id,dados)
+      refresh()
     } catch (error) {
       console.log(error)
     }
@@ -370,11 +379,15 @@ function NewList(props) {
 
   function openModal(id) {
     setTaskID(id)
-    setModalDelete(!modalDelete);    
+    setModalDelete(!modalDelete);
   }
 
-  function openModalEdit(id) {
+  function openModalEdit(id, phone, name, avatar, capa) {
     setBotNameID(id)
+    setBotPhoneNumber(phone)
+    setAttBotName(name)
+    setAvatarImg(avatar)
+    setCapaImg(capa)
     setModalEdit(!modalEdit)
   }
 
@@ -394,13 +407,13 @@ function NewList(props) {
             <Card className={classes.root}>
               <CardHeader 
                 avatar={
-                  <Avatar arial-label="recipe" className={classes.avatar} src={avatarImg}>
+                  <Avatar arial-label="recipe" className={classes.avatar} src={task.botAvatar}>
                     
                   </Avatar>
                 }
                 action={
                   <IconButton arial-label="settings">
-                    <EditIcon onClick={()=>openModalEdit(task.id)} />
+                    <EditIcon onClick={()=>openModalEdit(task.id, task.botTelefone, task.botName, task.botAvatar, task.botCapa)} />
                   </IconButton>
                 }
                 title={task.botName}
@@ -409,7 +422,7 @@ function NewList(props) {
               
               <CardMedia 
                 className={classes.media}
-                image="https://s2.glbimg.com/p4SHGxODVxBqHe8emRleBrUJxQs=/0x0:1600x900/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2020/J/p/aA9AQlTEqlPNP0AwNwAA/foto-01-materia.jpg"
+                image={task.botCapa}
                 title="imagem">
               </CardMedia>
 
@@ -508,18 +521,32 @@ function NewList(props) {
                       onChange={(texto) => setAttBotName(texto.target.value)}
                       />
                       <div></div>
+                      {/* <InputMask
+                        className="editBotModalPhone"
+                        // onChange={(texto) => setBotTelefone(texto.target.value)}
+                        placeholder="Bot number"        
+                        mask="+55 999999999"
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <PhoneIcon style={{color:'#858585'}} />
+                            </InputAdornment>
+                          ),
+                        }}
+                        />
+                        <div></div> */}
                     <TextField
                       id="input-with-icon-textfield"
-                      placeholder="Bot number"
+                      placeholder="+55 999999999"
                       className="editBotModal"
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
                             <PhoneIcon style={{color:'#858585'}} />
                           </InputAdornment>
-                        ),
+                        ),                        
                       }}
-                      onChange={(texto) => setAttBotName(texto.target.value)}
+                      onChange={(number) => setBotPhoneNumber(number.target.value)}
                       />
                       <div></div>
                     <TextField
@@ -547,6 +574,7 @@ function NewList(props) {
                           </InputAdornment>
                         ),
                       }}
+                      onChange={(text)=>setCapaImg(text.target.value)}
                       />
                       <div></div>
                     <Button

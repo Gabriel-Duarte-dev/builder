@@ -27,3 +27,14 @@
     max-width: 300px;
     width: 100%;    
 }
+.modalContent .editBotModalPhone{
+    padding: 20px 0;
+    max-width: 300px;
+    width: 100%;
+    border: 0;
+    border-bottom: 1px solid #a5a5a5d9;
+    outline: 0;
+}
+.modalContent .editBotModalPhone:hover{    
+    border-color: #3F5AA9;
+}
