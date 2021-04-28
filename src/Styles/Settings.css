@@ -1,0 +1,45 @@
+.h2_Twilio {
+    color: #333;
+    padding: 5px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-left: 40px;
+    
+}
+
+.textTitle {
+    color: #555;
+    font-size: 13px;
+    margin-left: 40px;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+.textInput {
+    font-weight: bold;
+    color: #555;
+    font-size: 15px;
+    margin-top: 15px;
+    margin-left: 40px;
+    margin-bottom: 1px;
+    padding: 5px;
+}
+.input {
+    background-color:#fff;
+    height: 36px;
+    width: 55%;
+    border-radius: 5px;
+    margin-left: 40px;
+    margin-top: 3px;
+    margin-bottom: 5px;
+    padding: 10px;
+    border: 1px solid #333;
+}:focus{
+    outline: none;
+    border: 2px solid #333;
+}
+
+.saveButton {
+    margin-top: 25px;
+    margin-left: 40px;
+}

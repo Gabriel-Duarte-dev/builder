@@ -6,9 +6,9 @@ import RoutePage from './route.js'
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <RoutePage />
-  </React.StrictMode>,
+  // <React.StrictMode>
+    <RoutePage />,
+  // </React.StrictMode>,
   document.getElementById('root')
 );
 
