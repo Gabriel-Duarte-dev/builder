@@ -97,7 +97,7 @@ export default function Builder(props) {
     
   let {id} = useParams();
 
-  const [send, setSend] = useState();
+  // const [send, setSend] = useState();
 
   const [tasks, setTask] = useState([]);
 

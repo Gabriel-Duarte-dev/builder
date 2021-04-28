@@ -21,3 +21,9 @@
     max-width: 300px;
     margin: 10px 14px;
 }
+
+.modalContent .editBotModal{
+    padding: 20px 0;
+    max-width: 300px;
+    width: 100%;    
+}

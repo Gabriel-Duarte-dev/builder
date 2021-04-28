@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 import {Link} from 'react-router-dom'
-import route from '../route.js'
 import Header from './Header.jsx'
 import "./home.css"
 import "../App.css"
@@ -15,16 +14,21 @@ import AddIcon from '@material-ui/icons/Add'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardMedia from '@material-ui/core/CardMedia'
+import IconButton from '@material-ui/core/IconButton';
 // import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
 import Avatar from '@material-ui/core/Avatar'
-import { red } from '@material-ui/core/colors'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import BuildIcon from '@material-ui/icons/Build';
+import EditIcon from '@material-ui/icons/Edit';
+import ImageIcon from '@material-ui/icons/Image';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import PhoneIcon from '@material-ui/icons/Phone';
 import TextField from '@material-ui/core/TextField';
 import InputMask from 'react-input-mask'
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 import loadingIcon from '../imagens/loading.gif'
 import iconModal from '../imagens/iconModal.png'
@@ -85,18 +89,16 @@ paper: {
     },
   },
   confirmButton: {
-    marginTop: '110px',  
-    
+    marginTop: '110px',      
     marginRight: '30px',
     backgroundColor: '#44bd32',
     color: '#fff',
     '&:hover': {
-      backgroundColor: '#6ab04c !important'
+      backgroundColor: '#00b330 !important'
     },
   },
-  cancelBtton: {    
-    marginTop: '110px',  
-    
+  cancelButton: {    
+    marginTop: '110px',      
     marginLeft: '40px',
     backgroundColor: 'rgb(255, 74, 74)',
     color: '#fff',
@@ -142,7 +144,27 @@ paper: {
   },
   modalButton: {
     margin: '40px 30px',
-  }
+  },
+  saveButtonEditModal: {
+    marginRight: '30px',
+    marginTop: '40px',
+    marginBottom: '40px',
+    backgroundColor: '#44bd32',
+    color: '#fff',
+    '&:hover': {
+      backgroundColor: '#00b330 !important'
+    },
+  },
+  cancelButtonEditModal: {        
+    marginLeft: '40px',
+    marginTop: '40px',
+    marginBottom: '40px',
+    backgroundColor: 'rgb(255, 74, 74)',
+    color: '#fff',
+    '&:hover': {
+      backgroundColor: 'rgb(206, 5, 5) !important'
+    },
+  },
 }));
 
 
@@ -154,7 +176,8 @@ export default function PageHome(props) {
   
   const [tasks, setTask] = useState([]);
   const [open, setOpen] = React.useState(false); 
-  const [loading, setLoading] = useState(true);  
+  const [loading, setLoading] = useState(true);
+  // const [botID, setBotID] = useState("")
   
   const [alertOpen, setAlertOpen] = React.useState(false);  
 
@@ -201,6 +224,7 @@ async function receber() {
   const response_get = await api.get('/api/bot')
   const data = response_get.data
   setTask(data)
+  // setBotID(tasks)  
   console.log(data);
   setLoading(false)
   } catch (error) {
@@ -233,19 +257,19 @@ const [botTelefone, setBotTelefone] = useState('');
       <form className="formNewBot">
 
         <TextField 
-          className={classes.inputNewBot} 
-          onChange={(texto) => setBotNome(texto.target.value)} 
-          placeholder="Digite o nome do bot"/>
+          className={classes.inputNewBot}
+          onChange={(texto) => setBotNome(texto.target.value)}
+          placeholder="Bot name"/>
         <div></div>
         <InputMask
         className={classes.inputMask} 
-        onChange={(texto) => setBotTelefone(texto.target.value)} 
+        onChange={(texto) => setBotTelefone(texto.target.value)}
         placeholder="+55999999999"        
         mask="+55 999999999" />          
 
         <div></div>
         <Button variant="contained" className={classes.creatBotButtonClose} onClick={handleClose}> Close </Button>
-        <Button variant="contained" disabled={disable} className={classes.creatBotButtonCreat} onClick={enviar}> Create BOT  </Button>
+        <Button variant="contained" disabled={disable} className={classes.creatBotButtonCreat} onClick={enviar}> Create </Button>
 
       </form>            
     </div>
@@ -287,7 +311,7 @@ const [botTelefone, setBotTelefone] = useState('');
           {body}
         </Modal>
       <div className="cardBots">
-        <NewList tasks={tasks} refresh={receber} />
+        <NewList tasks={tasks} refresh={receber}  />
       </div>
     </div>
   );
@@ -298,7 +322,16 @@ function NewList(props) {
   const { tasks, refresh } = props;
   const classes = useStyles();
   const [modalDelete, setModalDelete] = useState(false)
+<<<<<<< HEAD
   const [ taskID, setTaskID ] = useState('')
+=======
+  const [modalEdit, setModalEdit] = useState(false) 
+  const [taskID, setTaskID]  = useState("")
+  const [botNameID, setBotNameID] = useState("")
+
+  const [avatarImg, setAvatarImg] = useState("")
+  const [attBotName, setAttBotName] = useState("")
+>>>>>>> 1218f44c9321eb5bfd3dccadf232f21f29dcafef
   
   const [alertOpenDelete, setAlertOpenDelete] = React.useState(false);
 
@@ -315,8 +348,24 @@ function NewList(props) {
     try {
       const response = await api.delete('/api/bot/'+id)
       refresh()
-      setModalDelete(false)
-      setAlertOpenDelete(true);
+      setModalDelete(false)      
+      setAlertOpenDelete(true);      
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async function changeNameBot(id) {
+    try {
+      const response_get = await api.get('api/bot/'+id)
+      const data = response_get.data
+      const dados = {        
+        botName: attBotName
+      }
+      refresh()
+      setModalEdit(!modalEdit)
+      console.log(dados)
+      const response = await api.patch('api/bot/'+id,dados)
     } catch (error) {
       console.log(error)
     }
@@ -324,13 +373,22 @@ function NewList(props) {
 
   function openModal(id) {
     setTaskID(id)
+<<<<<<< HEAD
     setModalDelete(!modalDelete);
+=======
+    setModalDelete(!modalDelete);    
+  }
+
+  function openModalEdit(id) {
+    setBotNameID(id)
+    setModalEdit(!modalEdit)
+>>>>>>> 1218f44c9321eb5bfd3dccadf232f21f29dcafef
   }
 
   return (
     <div className="cardBots">
-      {tasks.map((task, index) => {
-        console.log(task.id)
+      {tasks.map((task, index) =>  {
+        
         return (
           <div className="cardBots-Content" key={index}>
 
@@ -339,15 +397,24 @@ function NewList(props) {
                 Bot successfully deleted!
               </Alert>
             </Snackbar>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1218f44c9321eb5bfd3dccadf232f21f29dcafef
             <Card className={classes.root}>
               <CardHeader 
                 avatar={
-                  <Avatar arial-label="recipe" className={classes.avatar} src="https://maishm.com.br/storage/news/novo-posicionamento-de-marca.png">
+                  <Avatar arial-label="recipe" className={classes.avatar} src={avatarImg}>
                     
                   </Avatar>
                 }
+                action={
+                  <IconButton arial-label="settings">
+                    <EditIcon onClick={()=>openModalEdit(task.id)} />
+                  </IconButton>
+                }
                 title={task.botName}
-                subheader="subtitulo">
+                subheader="subtitulo">                
               </CardHeader>
               
               <CardMedia 
@@ -389,6 +456,7 @@ function NewList(props) {
         
       })}
 
+<<<<<<< HEAD
         {
           modalDelete?
           <div className="modal">
@@ -426,6 +494,135 @@ function NewList(props) {
           :
           console.log()
         }
+=======
+            {
+              modalDelete?
+              <div className="modal">
+                <div className="modalContent">
+                  <i onClick={()=>openModal()} className="fas fa-times"></i>
+                    
+                    <div className="modalHeader">
+                      <img src={iconModal} className="icon" />
+                      <h1>Delete Bot?</h1>
+                    </div>                    
+                    
+                    <Button
+                      variant="contained"
+                      className={classes.confirmButton}                      
+                      onClick={()=>deleteBot(taskID)}
+                    >
+                      Confirm
+                    </Button>
+
+                    <Button
+                      variant="contained"        
+                      className={classes.cancelButton}
+                      onClick={()=>openModal()}                        
+                    >
+                      Cancel
+                    </Button>
+                    
+
+                    {/* <ul>
+                      <li onClick={()=>deleteBot(task.id)}>Confirm</li>
+                      <li onClick={()=>openModal()}>Cancel</li>
+                    </ul> */}
+                    
+                </div>
+              </div>
+              :
+              console.log()
+            }
+
+            {
+              modalEdit?
+              <div className="modal">
+                <div className="modalContent">
+                  <i onClick={()=>openModalEdit()} className="fas fa-times"></i>
+                    
+                    <div className="modalHeader">
+                      <img src={iconModal} className="icon" />
+                      <h1>Edit Bot</h1>
+                    </div>
+                                    
+                    <TextField
+                      id="input-with-icon-textfield"
+                      placeholder="Bot name"
+                      className="editBotModal"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <EditIcon style={{color:'#858585'}} />
+                          </InputAdornment>
+                        ),
+                      }}
+                      onChange={(texto) => setAttBotName(texto.target.value)}
+                      />
+                      <div></div>
+                    <TextField
+                      id="input-with-icon-textfield"
+                      placeholder="Bot number"
+                      className="editBotModal"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <PhoneIcon style={{color:'#858585'}} />
+                          </InputAdornment>
+                        ),
+                      }}
+                      onChange={(texto) => setAttBotName(texto.target.value)}
+                      />
+                      <div></div>
+                    <TextField
+                      id="input-with-icon-textfield"
+                      placeholder="Avatar img"
+                      className="editBotModal"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <AccountCircleIcon style={{color:'#858585'}} />
+                          </InputAdornment>
+                        ),
+                      }}
+                      onChange={(text)=>setAvatarImg(text.target.value)}
+                      />
+                      <div></div>
+                    <TextField
+                      id="input-with-icon-textfield"
+                      placeholder="Capa img"
+                      className="editBotModal"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <ImageIcon style={{color:'#858585'}} />
+                          </InputAdornment>
+                        ),
+                      }}
+                      />
+                      <div></div>
+                    <Button
+                      variant="contained"
+                      className={classes.saveButtonEditModal}                      
+                      onClick={()=>changeNameBot(botNameID)}
+                    >
+                      Save
+                    </Button>
+
+                    <Button
+                      variant="contained"        
+                      className={classes.cancelButtonEditModal}
+                      onClick={()=>openModalEdit()}
+                    >
+                      Cancel
+                    </Button>
+                    
+
+                </div>
+              </div>:
+              console.log()
+            }
+
+>>>>>>> 1218f44c9321eb5bfd3dccadf232f21f29dcafef
     </div>
   );
 }
