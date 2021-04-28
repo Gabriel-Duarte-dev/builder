@@ -322,16 +322,12 @@ function NewList(props) {
   const { tasks, refresh } = props;
   const classes = useStyles();
   const [modalDelete, setModalDelete] = useState(false)
-<<<<<<< HEAD
-  const [ taskID, setTaskID ] = useState('')
-=======
   const [modalEdit, setModalEdit] = useState(false) 
   const [taskID, setTaskID]  = useState("")
   const [botNameID, setBotNameID] = useState("")
 
   const [avatarImg, setAvatarImg] = useState("")
   const [attBotName, setAttBotName] = useState("")
->>>>>>> 1218f44c9321eb5bfd3dccadf232f21f29dcafef
   
   const [alertOpenDelete, setAlertOpenDelete] = React.useState(false);
 
@@ -373,16 +369,12 @@ function NewList(props) {
 
   function openModal(id) {
     setTaskID(id)
-<<<<<<< HEAD
-    setModalDelete(!modalDelete);
-=======
     setModalDelete(!modalDelete);    
   }
 
   function openModalEdit(id) {
     setBotNameID(id)
     setModalEdit(!modalEdit)
->>>>>>> 1218f44c9321eb5bfd3dccadf232f21f29dcafef
   }
 
   return (
@@ -397,10 +389,6 @@ function NewList(props) {
                 Bot successfully deleted!
               </Alert>
             </Snackbar>
-<<<<<<< HEAD
-=======
-
->>>>>>> 1218f44c9321eb5bfd3dccadf232f21f29dcafef
             <Card className={classes.root}>
               <CardHeader 
                 avatar={
@@ -456,45 +444,6 @@ function NewList(props) {
         
       })}
 
-<<<<<<< HEAD
-        {
-          modalDelete?
-          <div className="modal">
-            <div className="modalContent">
-              <i onClick={()=>openModal()} className="fas fa-times"></i>
-                
-                <div className="modalHeader">
-                  <img src={iconModal} className="icon" />
-                  <h1>Delete Bot?</h1>
-                </div>                    
-
-                <Button
-                  variant="contained"        
-                  className={classes.confirmButton}                      
-                  onClick={()=>deleteBot(taskID)}
-                >
-                  Confirm
-                </Button>
-
-                <Button
-                  variant="contained"        
-                  className={classes.cancelBtton}                      
-                  onClick={()=>openModal(null)}
-                >
-                  Cancel
-                </Button>
-
-                {/* <ul>
-                  <li onClick={()=>deleteBot(task.id)}>Confirm</li>
-                  <li onClick={()=>openModal()}>Cancel</li>
-                </ul> */}
-                
-            </div>
-          </div>
-          :
-          console.log()
-        }
-=======
             {
               modalDelete?
               <div className="modal">
@@ -622,7 +571,6 @@ function NewList(props) {
               console.log()
             }
 
->>>>>>> 1218f44c9321eb5bfd3dccadf232f21f29dcafef
     </div>
   );
 }
