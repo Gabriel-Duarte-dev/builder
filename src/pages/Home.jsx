@@ -23,6 +23,7 @@ import BuildIcon from '@material-ui/icons/Build';
 import EditIcon from '@material-ui/icons/Edit';
 import ImageIcon from '@material-ui/icons/Image';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import PhoneIcon from '@material-ui/icons/Phone';
 import TextField from '@material-ui/core/TextField';
 import InputMask from 'react-input-mask'
 import Snackbar from '@material-ui/core/Snackbar';
@@ -324,7 +325,7 @@ function NewList(props) {
   const [modalDelete, setModalDelete] = useState(false)
   const [modalEdit, setModalEdit] = useState(false) 
   const [taskID, setTaskID]  = useState("")
-  const [taskDeleteID, setTaskDeleteID] = useState("")
+  const [botNameID, setBotNameID] = useState("")
 
   const [avatarImg, setAvatarImg] = useState("")
   const [attBotName, setAttBotName] = useState("")
@@ -358,6 +359,8 @@ function NewList(props) {
       const dados = {        
         botName: attBotName
       }
+      refresh()
+      setModalEdit(!modalEdit)
       console.log(dados)
       const response = await api.patch('api/bot/'+id,dados)
     } catch (error) {
@@ -371,7 +374,7 @@ function NewList(props) {
   }
 
   function openModalEdit(id) {
-    setTaskDeleteID(id)
+    setBotNameID(id)
     setModalEdit(!modalEdit)
   }
 
@@ -493,12 +496,26 @@ function NewList(props) {
                                     
                     <TextField
                       id="input-with-icon-textfield"
-                      placeholder="Name Bot"
+                      placeholder="Bot name"
                       className="editBotModal"
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
                             <EditIcon style={{color:'#858585'}} />
+                          </InputAdornment>
+                        ),
+                      }}
+                      onChange={(texto) => setAttBotName(texto.target.value)}
+                      />
+                      <div></div>
+                    <TextField
+                      id="input-with-icon-textfield"
+                      placeholder="Bot number"
+                      className="editBotModal"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <PhoneIcon style={{color:'#858585'}} />
                           </InputAdornment>
                         ),
                       }}
@@ -535,7 +552,7 @@ function NewList(props) {
                     <Button
                       variant="contained"
                       className={classes.saveButtonEditModal}                      
-                      onClick={()=>changeNameBot(taskDeleteID)}
+                      onClick={()=>changeNameBot(botNameID)}
                     >
                       Save
                     </Button>
