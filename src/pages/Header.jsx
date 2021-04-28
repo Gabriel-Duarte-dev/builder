@@ -19,7 +19,7 @@ function Header(props){
                 <li>Usuário</li>
                 <li>Template</li>
                 <li>Intenções</li>
-                <li>Integração</li>
+                <Link to="/settings"><li>Settings</li></Link>
             </ul>
        </header>
     )
