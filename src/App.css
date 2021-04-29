@@ -5,7 +5,7 @@
   font-family: 'Montserrat';
 }
 
-html, body, .root{
+html, body, #root, .root{
   height: 100% !important;
 }
 body{
@@ -115,7 +115,7 @@ header ul li{
   width: 500px;
   min-height: 250px;
   /* padding: 40px 20px; */
-  background: rgb(255, 255, 255);
+  background: #333;
   position: absolute;
   left: 50%;
   top: 50%;

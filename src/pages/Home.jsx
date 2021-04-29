@@ -8,7 +8,6 @@ import api from '../api'
 import '../components/Modal'
 import { makeStyles } from '@material-ui/core/styles'
 import Modal from '@material-ui/core/Modal'
-import MaskedInput from "react-text-mask";
 
 
 import Button from '@material-ui/core/Button'
@@ -31,6 +30,13 @@ import InputMask from 'react-input-mask'
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import InputAdornment from '@material-ui/core/InputAdornment';
+
+import {
+  fade,
+  ThemeProvider,
+  withStyles,  
+  createMuiTheme,
+} from '@material-ui/core/styles';
 
 import loadingIcon from '../imagens/loading.gif'
 import iconModal from '../imagens/iconModal.png'
@@ -169,6 +175,11 @@ paper: {
       backgroundColor: 'rgb(206, 5, 5) !important'
     },
   },
+  textField: {
+    '& .MuiInput-underline:after': {
+      borderBottomColor: 'rgb(92, 0, 128)',
+    },
+  }
 }));
 
 
@@ -338,6 +349,24 @@ function NewList(props) {
 
   const [alertOpenDelete, setAlertOpenDelete] = React.useState(false);
 
+  const CssTextField = withStyles({
+    root: {      
+      '& .MuiInput-underline:after': {
+        borderBottomColor: 'rgb(92, 0, 128)',
+      },
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: 'red',
+        },
+        '&:hover fieldset': {
+          borderColor: 'yellow',
+        },
+        '&.Mui-focused fieldset': {
+          borderColor: 'green',
+        },
+      },
+    },
+  })(TextField);
 
   const alertCloseDelete = (event, reason) => {
     if (reason === 'clickaway') {
@@ -516,7 +545,7 @@ function NewList(props) {
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
-                            <EditIcon style={{color:'#858585'}} />
+                            <EditIcon style={{color:'#8c8c8c'}} />
                           </InputAdornment>
                         ),
                       }}
@@ -531,7 +560,7 @@ function NewList(props) {
                         InputProps={{
                           startAdornment: (
                             <InputAdornment position="start">
-                              <PhoneIcon style={{color:'#858585'}} />
+                              <PhoneIcon style={{color:'#8c8c8c'}} />
                             </InputAdornment>
                           ),
                         }}
@@ -544,7 +573,7 @@ function NewList(props) {
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
-                            <PhoneIcon style={{color:'#858585'}} />
+                            <PhoneIcon style={{color:'#8c8c8c'}} />
                           </InputAdornment>
                         ),                        
                       }}
@@ -555,14 +584,15 @@ function NewList(props) {
                       id="input-with-icon-textfield"
                       placeholder="Avatar img"
                       className="editBotModal"
+                      type="file"
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
-                            <AccountCircleIcon style={{color:'#858585'}} />
+                            <AccountCircleIcon style={{color:'#8c8c8c'}} />
                           </InputAdornment>
                         ),
                       }}
-                      onChange={(text)=>setAvatarImg(text.target.value)}
+                      onChange={(e)=>setAvatarImg(e.target.files[0])}
                       />
                       <div></div>
                     <TextField
