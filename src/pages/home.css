@@ -27,6 +27,15 @@
     max-width: 300px;
     width: 100%;    
 }
+.modalContent .editBotModal .MuiInput-underline:before{
+    border-bottom-color: rgb(168, 168, 168);  
+}
+.modalContent .editBotModal .MuiInput-underline:after{
+    border-bottom-color: rgb(92, 0, 128);    
+}
+.modalContent .editBotModal .MuiInput-root{
+    color: #fff;
+}
 .modalContent .editBotModalPhone{
     padding: 20px 0;
     max-width: 300px;

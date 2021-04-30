@@ -8,7 +8,6 @@ import api from '../api'
 import '../components/Modal'
 import { makeStyles } from '@material-ui/core/styles'
 import Modal from '@material-ui/core/Modal'
-import MaskedInput from "react-text-mask";
 
 
 import Button from '@material-ui/core/Button'
@@ -31,6 +30,13 @@ import InputMask from 'react-input-mask'
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import InputAdornment from '@material-ui/core/InputAdornment';
+
+import {
+  fade,
+  ThemeProvider,
+  withStyles,  
+  createMuiTheme,
+} from '@material-ui/core/styles';
 
 import loadingIcon from '../imagens/loading.gif'
 import iconModal from '../imagens/iconModal.png'
@@ -169,6 +175,11 @@ paper: {
       backgroundColor: 'rgb(206, 5, 5) !important'
     },
   },
+  textField: {
+    '& .MuiInput-underline:after': {
+      borderBottomColor: 'rgb(92, 0, 128)',
+    },
+  }
 }));
 
 
@@ -182,6 +193,8 @@ export default function PageHome(props) {
   const [open, setOpen] = React.useState(false); 
   const [loading, setLoading] = useState(true);
   // const [botID, setBotID] = useState("")
+  const [avatarImg, setAvatarImg] = useState(null)
+  const [capaImg, setCapaImg] = useState(null)
   
   const [alertOpen, setAlertOpen] = React.useState(false);  
 
@@ -205,12 +218,37 @@ export default function PageHome(props) {
 
   async function enviar() {    
     setDisable(true)
-    try {
-      const response_get = await api.post('/api/bot/register',
-      {
-      botName: botNome,
-      botTelefone: botTelefone
+    try {           
+      
+      const avatarUrl = new FormData();
+
+      avatarUrl.append('file', avatarImg)
+
+      console.log(avatarUrl)
+
+      const data = await api.post('api/bot/posts', avatarUrl)
+
+      const awsAvatar = data.data
+
+      const capaUrl = new FormData();
+
+      capaUrl.append('file', capaImg)
+
+      console.log(capaUrl)
+
+      const dataCapa = await api.post('api/bot/posts', capaUrl)
+
+      const awsCapa = dataCapa.data
+      
+      const body = {
+        botName: botNome,
+        botTelefone: botTelefone,
+        botAvatar: awsAvatar,
+        botCapa: awsCapa
     }
+    console.log(body)
+      const response_get = await api.post('/api/bot/register',
+      body
     )
     receber()
     setDisable(false)
@@ -235,6 +273,7 @@ async function receber() {
     console.log(error)
   }
 }
+
 
 // USE EFFECT PARA RECEBER DADOS DA API
 
@@ -270,10 +309,14 @@ const [botTelefone, setBotTelefone] = useState('');
         onChange={(texto) => setBotTelefone(texto.target.value)}
         placeholder="+55999999999"        
         mask="+55 999999999" />          
-
         <div></div>
+        <input type="file" onChange={(e)=> {setAvatarImg(e.target.files[0])}}  />
+        <div></div>
+        <input type="file" onChange={(e)=> {setCapaImg(e.target.files[0])}}  />
+        <div></div>
+
+        <Button variant="contained" disabled={disable} className={classes.creatBotButtonCreat} onClick={()=>enviar()}> Create </Button>
         <Button variant="contained" className={classes.creatBotButtonClose} onClick={handleClose}> Close </Button>
-        <Button variant="contained" disabled={disable} className={classes.creatBotButtonCreat} onClick={enviar}> Create </Button>
 
       </form>            
     </div>
@@ -338,6 +381,24 @@ function NewList(props) {
 
   const [alertOpenDelete, setAlertOpenDelete] = React.useState(false);
 
+  const CssTextField = withStyles({
+    root: {      
+      '& .MuiInput-underline:after': {
+        borderBottomColor: 'rgb(92, 0, 128)',
+      },
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: 'red',
+        },
+        '&:hover fieldset': {
+          borderColor: 'yellow',
+        },
+        '&.Mui-focused fieldset': {
+          borderColor: 'green',
+        },
+      },
+    },
+  })(TextField);
 
   const alertCloseDelete = (event, reason) => {
     if (reason === 'clickaway') {
@@ -360,17 +421,37 @@ function NewList(props) {
 
   async function changeNameBot(id) {
     try {
+      const avatarUrl = new FormData();
+
+      avatarUrl.append('file', avatarImg)
+
+      console.log(avatarUrl)
+
+      const dataAvatar = await api.post('api/bot/posts', avatarUrl)
+
+      const awsAvatar = dataAvatar.data
+
+      const capaUrl = new FormData();
+
+      capaUrl.append('file', capaImg)
+
+      console.log(capaUrl)
+
+      const dataCapa = await api.post('api/bot/posts', capaUrl)
+
+      const awsCapa = dataCapa.data
+
       const response_get = await api.get('api/bot/'+id)
       const data = response_get.data
       const dados = {        
         botName: attBotName,
         botTelefone: botPhoneNumber,
-        botAvatar: avatarImg,
-        botCapa: capaImg
+        botAvatar: awsAvatar,
+        botCapa: awsCapa
       }
       setModalEdit(!modalEdit)
       console.log(dados)
-      const response = await api.patch('api/bot/'+id,dados)
+      const response = await api.put('api/bot/'+id,dados)
       refresh()
     } catch (error) {
       console.log(error)
@@ -407,7 +488,7 @@ function NewList(props) {
             <Card className={classes.root}>
               <CardHeader 
                 avatar={
-                  <Avatar arial-label="recipe" className={classes.avatar} src={task.botAvatar}>
+                  <Avatar arial-label="recipe" className={classes.avatar} src={task.botAvatar.url}>
                     
                   </Avatar>
                 }
@@ -422,7 +503,7 @@ function NewList(props) {
               
               <CardMedia 
                 className={classes.media}
-                image={task.botCapa}
+                image={task.botCapa.url}
                 title="imagem">
               </CardMedia>
 
@@ -516,7 +597,7 @@ function NewList(props) {
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
-                            <EditIcon style={{color:'#858585'}} />
+                            <EditIcon style={{color:'#8c8c8c'}} />
                           </InputAdornment>
                         ),
                       }}
@@ -531,7 +612,7 @@ function NewList(props) {
                         InputProps={{
                           startAdornment: (
                             <InputAdornment position="start">
-                              <PhoneIcon style={{color:'#858585'}} />
+                              <PhoneIcon style={{color:'#8c8c8c'}} />
                             </InputAdornment>
                           ),
                         }}
@@ -544,7 +625,7 @@ function NewList(props) {
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
-                            <PhoneIcon style={{color:'#858585'}} />
+                            <PhoneIcon style={{color:'#8c8c8c'}} />
                           </InputAdornment>
                         ),                        
                       }}
@@ -555,20 +636,22 @@ function NewList(props) {
                       id="input-with-icon-textfield"
                       placeholder="Avatar img"
                       className="editBotModal"
+                      type="file"
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
-                            <AccountCircleIcon style={{color:'#858585'}} />
+                            <AccountCircleIcon style={{color:'#8c8c8c'}} />
                           </InputAdornment>
                         ),
                       }}
-                      onChange={(text)=>setAvatarImg(text.target.value)}
+                      onChange={(e)=>setAvatarImg(e.target.files[0])}
                       />
                       <div></div>
                     <TextField
                       id="input-with-icon-textfield"
                       placeholder="Capa img"
                       className="editBotModal"
+                      type="file"
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
@@ -576,7 +659,7 @@ function NewList(props) {
                           </InputAdornment>
                         ),
                       }}
-                      onChange={(text)=>setCapaImg(text.target.value)}
+                      onChange={(e)=>setCapaImg(e.target.files[0])}
                       />
                       <div></div>
                     <Button

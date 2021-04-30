@@ -13,13 +13,13 @@ function Header(props){
 
         <header>
             <div className="box-logo">
-                <Link to="/" style={{ textDecoration:'none'}}><img className="logo" src={logo} /></Link>
+                <Link to="/" style={{ textDecoration:'none', border: 0}}><img className="logo" src={logo} /></Link>
             </div>        
             <ul>
                 <li>Usuário</li>
                 <li>Template</li>
                 <li>Intenções</li>
-                <Link to="/settings"><li>Settings</li></Link>
+                <Link to="/settings" style={{ textDecoration:'none', border: 0}}><li>Settings</li></Link>
             </ul>
        </header>
     )
