@@ -60,5 +60,10 @@
       border-radius: 5px;
       bottom:120px;
     }
+
+    .confirmbox .confirmlink:hover{
+     
+      font-size: 18px;
+    }
   
   

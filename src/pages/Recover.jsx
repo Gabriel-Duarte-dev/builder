@@ -7,7 +7,7 @@ import '../pages/Recover.css'
 
 function Recover() {
   return (
-    <div className="App">
+    <div className="pagerecover">
       <div className="recovery"> 
         <h1> Recover password</h1>
         <input placeholder="Your email" />
