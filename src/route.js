@@ -3,6 +3,7 @@ import React from 'react'
 import App from './App.js'
 import Home from './pages/Home.jsx'
 import Login from './pages/Login.jsx'
+import User from './pages/User.jsx'
 // import api from './api.js'
 // import {useEffect, useState} from 'react';
 
@@ -23,6 +24,7 @@ import {
           <Switch>
             <Route path="/" exact children={<Home/>} />
             <Route path="/login" children={<Login/>} />
+            <Route path="/user"   children={<User/>} />
             <Route path="/:id" children={<App var={"1234"} />} />            
           </Switch>
         </div>
