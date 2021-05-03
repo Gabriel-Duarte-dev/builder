@@ -15,8 +15,20 @@ import api from '../api'
 
  function User() {
 
-    const [token, setToken] = useState("");
+    const [token,     setToken    ] = useState("");
     const [firstName, setFirstName] = useState("");
+    const [email,     setEmail    ] = useState("");
+    const [lastName,  setLastName ] = useState("");
+    const [endereco,  setEndereco ] = useState("");
+    const [bairro,    setBairro   ] = useState("");
+    const [cidade,    setCidade   ] = useState("");
+    const [estado,    setEstado   ] = useState("");
+    const [telefone,  setTelefone ] = useState("");
+    const [cep,       setCep      ] = useState("");
+    const [pais,      setPais     ] = useState("");
+    
+
+    
 
     useEffect(()=>{
         receber()
@@ -36,8 +48,19 @@ import api from '../api'
         try {
             const response = await api.get('/accounts/601d7273cee6ff327072bd74', config)
             const data = response.data
-            setFirstName(data.firstName)
-            console.log(response)
+            setEmail      (data.email      === undefined ? "" : data.email);
+            setFirstName  (data.firstName  === undefined ? "" : data.firstName);
+            setLastName   (data.lastName   === undefined ? "" : data.lastName);
+            setEndereco   (data.endereco   === undefined ? "" : data.endereco);
+            setBairro     (data.bairro     === undefined ? "" : data.bairro);
+            setCidade     (data.cidade     === undefined ? "" : data.cidade);
+            setEstado     (data.estado     === undefined ? "" : data.estado) ;
+            setTelefone   (data.telefone   === undefined ? "" : data.telefone); 
+            setCep        (data.cep        === undefined ? "" : data.cep); 
+            setPais       (data.pais       === undefined ? "" : data.pais);
+
+
+            console.log(data)
         } catch (error) {
             console.log(error);
         }
@@ -46,11 +69,24 @@ import api from '../api'
     async function enviar(){
         try {
             const body = {
-                firstName:firstName
+                firstName : firstName,
+                email     :email,
+                lastName  :lastName,
+                endereco  :endereco,
+                bairro    :bairro,
+                cidade    :cidade,
+                estado    :estado,
+                telefone  :telefone,
+                cep       :cep,
+                pais      :pais,
+                               
             }
+            alert("Informações atualizadas com sucesso!")
+            
             const res = await api.put('/accounts/601d7273cee6ff327072bd74',body, token)
         } catch (error) {
             console.log(error)
+            alert("Erro ao atualizar as informações")
         }
     }
     return (
@@ -59,25 +95,44 @@ import api from '../api'
          <Header></Header>
              
 
+
+
     <div className="fundo">   
+     
       <React.Fragment>
 
-          {/* //Titulo da Div */}
+          {/* Titulo da Div */}
         <Typography variant="h6" gutterBottom>
-          Edit Profile
+          Edit Profile 
         </Typography>
-
+        
         {/* Conteiner que engloba todos os campos, se for adicionar um campo novo terá que ser dentro deste conteiner */}
-        <Grid container spacing={3}>
+        <Grid container spacing={4}>
             
+          {/* Criação do campo "E-mail" */}
+          <Grid item xs={12} sm={6}>
+           <TextField
+              disabled={true}
+              required
+              label="E-mail"
+              id="email"
+              name="email"
+              fullWidth
+              value={email}
+              onChange={(textoEmail)=>setFirstName(textoEmail.target.value)}
+            />
+          </Grid>           
+
             {/* Criação do campo "Firs Name" */}
           <Grid item xs={12} sm={6}>
             <TextField
               required
+              label="First name"
               id="firstName"
               name="firstName"
               value={firstName}
-              onChange={(aa)=>setFirstName(aa.target.value)}
+              onChange={(textoNome)=>setFirstName(textoNome.target.value)}
+              fullWidth
             />
           </Grid>
 
@@ -85,19 +140,87 @@ import api from '../api'
           <Grid item xs={12} sm={6}>
             <TextField
               required
+              label="Last name"
               id="lastName"
               name="lastName"
+              value={lastName}
+              onChange={(textoSobrenome)=>setLastName(textoSobrenome.target.value)}
+              fullWidth
               
+            />
+          </Grid>      
+
+          {/* Criação do campo "Address" */}
+          <Grid item xs={12} sm={6}>
+            <TextField 
+            label="Address" 
+            id="address" 
+            name="address" 
+            value={endereco}
+            onChange={(texoEndereco)=>setEndereco(texoEndereco.target.value)}
+            fullWidth
+            />
+          </Grid>   
+
+          {/* Criação do campo "District" */}
+          <Grid item xs={12} sm={6}>
+            <TextField 
+            label="District" 
+            id="district" 
+            name="district" 
+            value={bairro}
+            onChange={(textoBairro)=>setBairro(textoBairro.target.value)}
+            fullWidth
             />
           </Grid>
 
-          {/* Criação do campo "E-mail" */}
+          {/* Criação do campo "City" */}
           <Grid item xs={12} sm={6}>
             <TextField
-              required
-              id="email"
-              name="email"
-              
+            label="City"
+            id="city"
+            name="city"
+            value={cidade}
+            onChange={(textoCidade)=>setCidade(textoCidade.target.value)}
+            fullWidth             
+            />
+          </Grid>
+
+          
+
+          {/* Criação do campo "State/Region" */}
+          <Grid item xs={12} sm={6}>
+            <TextField 
+            label="State/Province" 
+            id="state" 
+            name="state" 
+            value={estado}
+            onChange={(textoEstado)=>setEstado(textoEstado.target.value)}
+            fullWidth
+            />
+          </Grid>
+
+          {/* Criação do campo "Zip/Postal Code" */}
+          <Grid item xs={12} sm={6}>
+            <TextField
+              label="Postcode / ZIP"
+              id="zip"
+              name="zip"
+              value={cep}
+              onChange={(textoCep)=>setCep(textoCep.target.value)}
+              fullWidth             
+            />
+          </Grid>
+
+          {/* Criação do campo "Country" */}
+          <Grid item xs={12} sm={6}>
+            <TextField
+              label="Country"
+              id="country"
+              name="country"
+              value={pais}
+              onChange={(textoPais)=>setPais(textoPais.target.value)}
+              fullWidth
             />
           </Grid>
 
@@ -105,51 +228,24 @@ import api from '../api'
           <Grid item xs={12} sm={6}>
             <TextField
               required
+              label="Phone number"
               id="phone"
               name="phone"
+              value={telefone}
+              onChange={(textoTelefone)=>setTelefone(textoTelefone.target.value)}
+              fullWidth
                           
             />
           </Grid>
 
-          {/* Criação do campo "City" */}
-          <Grid item xs={12} sm={6}>
-            <TextField
-              id="city"
-              name="city"
-              
-            />
-          </Grid>
-
-          {/* Criação do campo "State/Region" */}
-          <Grid item xs={12} sm={6}>
-            <TextField id="state" name="state" />
-          </Grid>
-
-          {/* Criação do campo "Zip/Postal Code" */}
-          <Grid item xs={12} sm={6}>
-            <TextField
-              id="zip"
-              name="zip"
-              
-            />
-          </Grid>
-
-          {/* Criação do campo "Country" */}
-          <Grid item xs={12} sm={6}>
-            <TextField
-              id="country"
-              name="country"
-              
-            />
-          </Grid>
-
             {/* Botão "Update Profile" */}
-          <button className="botao" onClick={()=>enviar()} >Update Profile</button> 
+          <button  className="botao" onClick={()=>enviar()} >Update Profile</button> 
 
         </Grid>
       </React.Fragment>
       </div> 
       </div>
+      
     );
   }
  export default User;
