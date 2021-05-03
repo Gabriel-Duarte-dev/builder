@@ -22,6 +22,7 @@ import Avatar from '@material-ui/core/Avatar'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import BuildIcon from '@material-ui/icons/Build';
 import EditIcon from '@material-ui/icons/Edit';
+import SettingsIcon from '@material-ui/icons/Settings';
 import ImageIcon from '@material-ui/icons/Image';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import PhoneIcon from '@material-ui/icons/Phone';
@@ -30,6 +31,9 @@ import InputMask from 'react-input-mask'
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import Switch from '@material-ui/core/Switch';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import {
   fade,
@@ -379,6 +383,8 @@ function NewList(props) {
   const [attBotName, setAttBotName] = useState("")
   const [botPhoneNumber, setBotPhoneNumber] = useState("")
 
+  const [timeOut, setTimeOut] = useState(false)
+
   const [alertOpenDelete, setAlertOpenDelete] = React.useState(false);
 
   const CssTextField = withStyles({
@@ -494,7 +500,7 @@ function NewList(props) {
                 }
                 action={
                   <IconButton arial-label="settings">
-                    <EditIcon onClick={()=>openModalEdit(task.id, task.botTelefone, task.botName, task.botAvatar, task.botCapa)} />
+                    <SettingsIcon onClick={()=>openModalEdit(task.id, task.botTelefone, task.botName, task.botAvatar, task.botCapa)} />
                   </IconButton>
                 }
                 title={task.botName}
@@ -661,6 +667,16 @@ function NewList(props) {
                       }}
                       onChange={(e)=>setCapaImg(e.target.files[0])}
                       />
+                      <div></div>
+                      <FormControlLabel 
+                        control={<Switch checked={timeOut} onClick={()=>setTimeOut(!timeOut)} />}
+                        label="Bot Timeout" />
+                      <div></div>
+                      <TextField
+                        type="number"
+                        variant="outlined"
+                        disabled={!timeOut}
+                        className="editBotModal" />
                       <div></div>
                     <Button
                       variant="contained"
