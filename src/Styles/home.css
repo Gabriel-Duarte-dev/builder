@@ -28,7 +28,7 @@
     width: 100%;    
 }
 .modalContent .editBotModal .MuiInput-underline:before{
-    border-bottom-color: rgb(168, 168, 168);  
+    border-bottom-color: rgb(168, 168, 168);
 }
 .modalContent .editBotModal .MuiInput-underline:after{
     border-bottom-color: rgb(92, 0, 128);    
@@ -50,4 +50,17 @@
 
 .modalContent .selectFile{
     color: rgb(148, 148, 148);
+}
+
+.modalContent .editBotModalTimeout{
+    padding: 20px 0;
+}
+.modalContent .editBotModalTimeout .MuiInput-underline:before{
+    border-bottom-color: rgb(168, 168, 168);
+}
+.modalContent .editBotModalTimeout .MuiInput-underline:after{
+    border-bottom-color: rgb(92, 0, 128);
+}
+.modalContent .editBotModalTimeout .MuiInput-root{
+    color: #fff;
 }

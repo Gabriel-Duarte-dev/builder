@@ -383,7 +383,8 @@ function NewList(props) {
   const [attBotName, setAttBotName] = useState("")
   const [botPhoneNumber, setBotPhoneNumber] = useState("")
 
-  const [timeOut, setTimeOut] = useState(false)
+  const [btnTimeOut, setBtnTimeOut] = useState(false)
+  const [timeOut, setTimeOut] = useState('')
 
   const [alertOpenDelete, setAlertOpenDelete] = React.useState(false);
 
@@ -453,7 +454,9 @@ function NewList(props) {
         botName: attBotName,
         botTelefone: botPhoneNumber,
         botAvatar: awsAvatar,
-        botCapa: awsCapa
+        botCapa: awsCapa,
+        botTimeout: btnTimeOut,
+        valueTimeout: timeOut
       }
       setModalEdit(!modalEdit)
       console.log(dados)
@@ -470,12 +473,14 @@ function NewList(props) {
     setModalDelete(!modalDelete);  
   }
 
-  function openModalEdit(id, phone, name, avatar, capa) {
+  function openModalEdit(id, phone, name, avatar, capa, timeout, valueTimeout) {
     setBotNameID(id)
     setBotPhoneNumber(phone)
     setAttBotName(name)
     setAvatarImg(avatar)
     setCapaImg(capa)
+    setBtnTimeOut(timeout)
+    setTimeOut(timeout)
     setModalEdit(!modalEdit)
   }
 
@@ -500,7 +505,11 @@ function NewList(props) {
                 }
                 action={
                   <IconButton arial-label="settings">
-                    <SettingsIcon onClick={()=>openModalEdit(task.id, task.botTelefone, task.botName, task.botAvatar, task.botCapa)} />
+                    <SettingsIcon
+                     onClick={()=>openModalEdit(
+                       task.id, task.botTelefone, task.botName,
+                       task.botAvatar, task.botCapa, task.botTimeout, task.valueTimeout
+                       )} />
                   </IconButton>
                 }
                 title={task.botName}
@@ -679,14 +688,15 @@ function NewList(props) {
                       <span className="selectFile">{capaImg.name}</span>
                       <div></div>
                       <FormControlLabel 
-                        control={<Switch checked={timeOut} onClick={()=>setTimeOut(!timeOut)} />}
-                        label="Bot Timeout" />
+                        control={<Switch checked={btnTimeOut} onClick={()=>setBtnTimeOut(!btnTimeOut)} />}
+                        label="Bot Timeout" style={{color: 'rgb(148, 148, 148)'}} />
                       <div></div>
                       <TextField
                         type="number"
-                        variant="outlined"
-                        disabled={!timeOut}
-                        className="editBotModal" />
+                        placeholder="time in minutes"
+                        disabled={!btnTimeOut}
+                        className="editBotModalTimeout"
+                        onChange={(e)=>setTimeOut(e.target.value)} />
                       <div></div>
                     <Button
                       variant="contained"
