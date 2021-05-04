@@ -70,23 +70,23 @@ import api from '../api'
         try {
             const body = {
                 firstName : firstName,
-                email     :email,
-                lastName  :lastName,
-                endereco  :endereco,
-                bairro    :bairro,
-                cidade    :cidade,
-                estado    :estado,
-                telefone  :telefone,
-                cep       :cep,
-                pais      :pais,
+                email     : email,
+                lastName  : lastName,
+                endereco  : endereco,
+                bairro    : bairro,
+                cidade    : cidade,
+                estado    : estado,
+                telefone  : telefone,
+                cep       : cep,
+                pais      : pais,
                                
             }
-            alert("Informações atualizadas com sucesso!")
+                alert("Informações atualizadas com sucesso!")
             
             const res = await api.put('/accounts/601d7273cee6ff327072bd74',body, token)
         } catch (error) {
             console.log(error)
-            alert("Erro ao atualizar as informações")
+                 alert("Erro ao atualizar as informações")
         }
     }
     return (
