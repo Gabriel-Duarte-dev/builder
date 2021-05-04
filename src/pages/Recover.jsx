@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from './Header.jsx';
 import RoutePage from '../route.js';
 import api from '../api';
-import '../pages/Recover.css'
+import '../Styles/Recover.css'
 
 function Recover() {
   return (

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from './Header.jsx';
 import RoutePage from '../route.js';
 import api from '../api';
-import './Confirm.css';
+import '../Styles/Confirm.css';
 import logo from '../imagens/logotexxia.png';
 import desenhoconfirm from '../imagens/desenhoconfirm.svg';
 

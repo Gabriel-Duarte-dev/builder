@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from './Header.jsx';
 import RoutePage from '../route.js';
 import api from '../api';
-import '../pages/Register.css';
+import '../Styles/Register.css';
 import logo from '../imagens/logotexxia.png';
 import desenho from '../imagens/image.svg';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';

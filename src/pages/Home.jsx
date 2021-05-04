@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import {Link} from 'react-router-dom'
 import Header from './Header.jsx'
-import "./home.css"
+import "../Styles/home.css"
 import "../App.css"
 import "../components/styles.css"
 import api from '../api'
@@ -492,7 +492,7 @@ function NewList(props) {
               </Alert>
             </Snackbar>
             <Card className={classes.root}>
-              <CardHeader 
+              <CardHeader
                 avatar={
                   <Avatar arial-label="recipe" className={classes.avatar} src={task.botAvatar.url}>
                     
@@ -638,7 +638,7 @@ function NewList(props) {
                       onChange={(number) => setBotPhoneNumber(number.target.value)}
                       />
                       <div></div>
-                    <TextField
+                    {/* <TextField
                       id="input-with-icon-textfield"
                       placeholder="Avatar img"
                       className="editBotModal"
@@ -651,9 +651,14 @@ function NewList(props) {
                         ),
                       }}
                       onChange={(e)=>setAvatarImg(e.target.files[0])}
-                      />
+                      /> */}
+                      <IconButton className="iconFile" component="label">
+                        <AccountCircleIcon style={{color:'#858585', fontSize: '50px'}} />                        
+                        <input type="file" onChange={(e)=>setAvatarImg(e.target.files[0])} hidden/>
+                      </IconButton>
+                      <span className="selectFile">{avatarImg.name}</span>
                       <div></div>
-                    <TextField
+                    {/* <TextField
                       id="input-with-icon-textfield"
                       placeholder="Capa img"
                       className="editBotModal"
@@ -666,7 +671,12 @@ function NewList(props) {
                         ),
                       }}
                       onChange={(e)=>setCapaImg(e.target.files[0])}
-                      />
+                      /> */}
+                      <IconButton className="iconFile" component="label">
+                        <ImageIcon style={{color:'#858585', fontSize: '50px'}} />                        
+                        <input type="file" onChange={(e)=>setCapaImg(e.target.files[0])} hidden/>
+                      </IconButton>
+                      <span className="selectFile">{capaImg.name}</span>
                       <div></div>
                       <FormControlLabel 
                         control={<Switch checked={timeOut} onClick={()=>setTimeOut(!timeOut)} />}

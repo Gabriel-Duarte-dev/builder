@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import {Link} from 'react-router-dom'
 import Header from './Header.jsx'
-import "./User.css"
+import "../Styles/User.css"
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
