@@ -693,7 +693,7 @@ function NewList(props) {
                       <div></div>
                       <TextField
                         type="number"
-                        placeholder="time in minutes"
+                        placeholder={btnTimeOut ? 'time in minutes' : ''}
                         disabled={!btnTimeOut}
                         className="editBotModalTimeout"
                         onChange={(e)=>setTimeOut(e.target.value)} />

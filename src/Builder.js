@@ -10,10 +10,17 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Icon from '@material-ui/core/Icon';
 import CheckIcon from '@material-ui/icons/Check';
 import { green, purple } from '@material-ui/core/colors';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import TextField from '@material-ui/core/TextField';
 
 import {useParams} from 'react-router-dom'
 import loadingIcon from './imagens/loading.gif'
@@ -35,11 +42,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: '30px',
     marginTop: '10px',  
     marginBottom: '5px',
-    backgroundColor: 'rgb(255, 74, 74)',
-    color: '#fff',
-    '&:hover': {
-      backgroundColor: 'rgb(206, 5, 5) !important'
-    }
+    fontWeight: 500
   },
   confirmButton: {
     marginTop: '110px',  
@@ -48,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#44bd32',
     color: '#fff',
     '&:hover': {
-      backgroundColor: '#6ab04c !important'
+      backgroundColor: '#00b330 !important'
     },
   },
   cancelBtton: {    
@@ -100,17 +103,20 @@ export default function Builder(props) {
   // const [send, setSend] = useState();
 
   const [tasks, setTask] = useState([]);
-
   const [nomeBloco, setNomeBloco] = useState("");
-
   const [botName, setBotName] = useState("");    
-
   const [modalDelete, setModalDelete] = useState(false);
-
   const [loading, setLoading] = useState(true);
+  const [modalTimeout, setModalTimeout] = useState(false)
+  const [btnTimeOut, setBtnTimeOut] = useState(false)
+  const [timeOut, setTimeOut] = useState('')
 
   const openModal = () => {
     setModalDelete(!modalDelete);
+  }
+
+  const openModalTimeout = () => {
+    setModalTimeout(!modalTimeout)
   }
 
   const addTask = task => {
@@ -162,6 +168,8 @@ export default function Builder(props) {
         const data = response.data             
         
         setTask(data.mensagem)
+        setBtnTimeOut(data.blocoTimeout)
+        setTimeOut(data.valueTimeout)
         setNomeBloco(data.nomeBloco)        
         console.log(data);
         
@@ -196,6 +204,26 @@ export default function Builder(props) {
     }
 }
 
+async function sendBlocoTimeout() {
+  try {
+    const response_get = await api.get('/api/bloco/'+props.blocoID)        
+    const data = response_get.data
+    const dados = {
+      nomeBloco: data.nomeBoloco,
+      mensagem: tasks,
+      blocoTimeout: btnTimeOut,
+      valueTimeout: timeOut
+  } 
+
+    const response = await api.patch('/api/bloco/'+props.blocoID, dados);
+  
+    openModalTimeout()
+  } catch (error) {
+    console.log(error)
+  }
+  
+}
+
 // function teste (){
 
 //   alert('teste')
@@ -218,6 +246,50 @@ export default function Builder(props) {
           <div className="loadingContent">
             {/* <CircularProgress style={{color: purple[800]}} /> */}
             <img src={loadingIcon} className="loadingIcon"/>
+          </div>
+        </div>
+        :
+        console.log()
+      }
+
+      {
+        modalTimeout?
+        <div className="modal">
+          <div className="modalContent">
+            <i onClick={()=>openModalTimeout()}  className="fas fa-times"></i>
+              
+              <div className="modalHeader">
+                <img src={iconModal} className="icon" />
+                <h1>Limit time</h1>
+              </div>
+
+              <FormControlLabel 
+                control={<Switch checked={btnTimeOut} onClick={()=>setBtnTimeOut(!btnTimeOut)} />}
+                label="Bloc timeout" style={{color: 'rgb(148, 148, 148)'}} />
+                <div></div>
+              <TextField
+                type="number"
+                placeholder={btnTimeOut ? 'time in minutes' : ''}
+                disabled={!btnTimeOut}
+                className="editBotModalTimeout"
+                onChange={(e)=>setTimeOut(e.target.value)} />
+                <div></div>
+              <Button
+                variant="contained"        
+                className={classes.confirmButton}                      
+                onClick={()=>sendBlocoTimeout()}
+              >
+                Confirm
+              </Button>
+
+              <Button
+                variant="contained"        
+                className={classes.cancelBtton}                      
+                onClick={()=>openModalTimeout()}
+              >
+                Cancel
+              </Button> 
+
           </div>
         </div>
         :
@@ -259,15 +331,44 @@ export default function Builder(props) {
       
       <div className="titleBloco">
         <h2><i className="fas fa-tag"></i> <span className="botName">{botName}</span> - {nomeBloco}</h2>
-        {/* <span onClick={()=>openModal()}><i class="fas fa-trash"></i>Excluir Bloco</span> */}
-        <Button
+        
+        <PopupState variant="popover" popupId="demo-popup-menu">
+          {(popupState) => (
+            <React.Fragment>
+              <Button
+                variant="contained"        
+                className={classes.button}
+                startIcon={<MoreVertIcon />}
+                {...bindTrigger(popupState )}
+              >
+                Options
+              </Button>
+              <Menu
+               {...bindMenu(popupState)}
+               anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+              }}
+              style={{marginTop: '3%'}}>
+                <MenuItem onClick={()=>{openModalTimeout() ;popupState.close()}}>Limit time</MenuItem>
+                <MenuItem style={{color: 'red'}} onClick={()=>{openModal(); popupState.close()}}>Delete</MenuItem>
+              </Menu>
+            </React.Fragment>
+          )}
+        </PopupState>
+
+        {/* <Button
         variant="contained"        
         className={classes.button}
         startIcon={<DeleteIcon />}
         onClick={()=>openModal()}
       >
         Excluir
-      </Button>
+      </Button> */}
       </div>      
         <div className="msgs">                  
 
